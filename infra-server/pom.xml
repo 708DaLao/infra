@@ -12,6 +12,7 @@
 
     <modules>
         <module>infra-business</module>
+        <module>infra-support</module>
     </modules>
 
     <properties>
