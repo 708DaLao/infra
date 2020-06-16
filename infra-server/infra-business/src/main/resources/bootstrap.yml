@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: infra-business
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #注册中心地址
+      config:
+        server-addr: 127.0.0.1:8848 #配置中心地址
+        namespace: af71c8ff-39d9-4338-85a9-ba20ddabbb7e  #命名空间
+        file-extension: yaml  #配置文件格式
+
