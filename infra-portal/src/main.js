@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'normalize.css/normalize.css' //初始化重置css样式
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
