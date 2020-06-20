@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../views/Login/Login'
+import Login from '../views/Login/index'
 
 Vue.use(Router)
 

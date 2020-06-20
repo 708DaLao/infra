@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'normalize.css/normalize.css' //初始化重置css样式
+import 'font-awesome/css/font-awesome.min.css' //使用font-awesome字体图标库
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
