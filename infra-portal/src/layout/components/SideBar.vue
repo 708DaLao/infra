@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="logo">
+            <img v-if="!$store.getters.isCollapse" src="../../assets/img/all.png" alt="" style="height: 100%;width: 200px">
+            <img v-else src="../../assets/img/icon-only.png" alt="" style="height: 100%;width: 65px">
+        </div>
         <el-menu
                 class="el-menu-vertical-demo"
                 background-color="#ebf1f6"
@@ -53,5 +57,9 @@
 </script>
 
 <style lang="scss" scoped>
+    .logo{
+        width: auto; /*高度固定，宽度变化*/
+        height: 60px;
+    }
 
 </style>
