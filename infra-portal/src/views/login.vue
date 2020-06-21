@@ -73,7 +73,7 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$router.push('/about')
+            this.$router.push('/')
           } else {
             console.log('error submit!!');
             return false;
