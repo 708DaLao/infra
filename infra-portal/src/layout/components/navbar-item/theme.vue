@@ -8,6 +8,7 @@
                     :visible.sync="isDrawer"
                     direction="rtl"
                     :with-header="false"
+                    size="23%"
                 >
                     <span>我来啦!</span>
                 </el-drawer>

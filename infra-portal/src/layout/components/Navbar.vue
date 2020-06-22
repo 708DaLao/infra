@@ -7,6 +7,7 @@
         </div>
         <div class="header-right">
             <div class="navbar-item">
+                <search />
                 <fullscreen />
                 <theme />
             </div>
@@ -28,11 +29,13 @@
 <script>
     import fullscreen from './navbar-item/fullscreen'
     import theme from './navbar-item/theme'
+    import search from './navbar-item/search'
     export default {
         name: "Navbar",
         components: {
             fullscreen,
-            theme
+            theme,
+            search
         },
         methods: {
             handelChange() {
