@@ -8,6 +8,7 @@
         <div class="header-right">
             <div class="navbar-item">
                 <fullscreen />
+                <theme />
             </div>
             <div>
                 <el-dropdown>
@@ -26,10 +27,12 @@
 
 <script>
     import fullscreen from './navbar-item/fullscreen'
+    import theme from './navbar-item/theme'
     export default {
         name: "Navbar",
         components: {
-            fullscreen
+            fullscreen,
+            theme
         },
         methods: {
             handelChange() {
@@ -65,10 +68,13 @@
         .header-right{
             float: right;
             display: flex;
-            justify-content: space-between;
             margin-right: 20px;
             .navbar-item{
-                margin: 0 20px;
+                height: 60px;
+                margin-right: 30px;
+                .el-button{
+                    margin-left: 25px;
+                }
             }
             img{
                 width: 40px;

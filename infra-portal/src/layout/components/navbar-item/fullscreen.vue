@@ -1,8 +1,8 @@
 <template>
     <el-tooltip effect="dark" :content="isFullscreen ? '退出全屏' : '全屏'" placement="bottom">
         <el-button type="text" @click="screenfull">
-            <i v-if="isFullscreen" class="fa fa-compress fa-lg" aria-hidden="true"></i>
-            <i v-else class="fa fa-arrows-alt fa-lg" aria-hidden="true"></i>
+            <i v-if="isFullscreen" class="fa fa-compress fa-lg"></i>
+            <i v-else class="fa fa-arrows-alt fa-lg"></i>
         </el-button>
     </el-tooltip>
 </template>
@@ -22,7 +22,7 @@
             // 全屏模式 将方法绑定(点击事件)到页面的元素上即可
             screenfull() {
                 screenfull.toggle()
-                this.isFullscreen = true
+                this.isFullscreen = !this.isFullscreen
             },
             // Esc 全屏监测
             checkFull() {
