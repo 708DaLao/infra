@@ -51,12 +51,12 @@ module.exports = {
       .set("views", resolve("src/views"));
 
     // 压缩图片
-    config.module
-      .rule("images")
-      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-      .use("image-webpack-loader")
-      .loader("image-webpack-loader")
-      .options({ bypassOnDebug: true });
+    // config.module
+    //   .rule("images")
+    //   .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+    //   .use("image-webpack-loader")
+    //   .loader("image-webpack-loader")
+    //   .options({ bypassOnDebug: true });
 
     // webpack 会默认给commonChunk打进chunk-vendors，所以需要对webpack的配置进行delete
     config.optimization.delete("splitChunks");
@@ -71,9 +71,10 @@ module.exports = {
       return args;
     });
 
-    config
-      .plugin("webpack-bundle-analyzer")
-      .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
+    // 包分析
+    // config
+    //   .plugin("webpack-bundle-analyzer")
+    //   .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
   },
 
   configureWebpack: config => {
