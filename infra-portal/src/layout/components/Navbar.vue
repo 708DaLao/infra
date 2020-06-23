@@ -19,6 +19,9 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>个人中心</el-dropdown-item>
+                        <a target="_blank" href="https://gitee.com/dalao708/infra">
+                            <el-dropdown-item>码云</el-dropdown-item>
+                        </a>
                         <el-dropdown-item divided>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
