@@ -10,12 +10,13 @@
                 <search />
                 <fullscreen />
                 <theme />
+                <news />
             </div>
             <div>
                 <el-dropdown>
-                <span class="el-dropdown-link avatar">
-                    <img src="../../assets/vue.png" alt="">
-                </span>
+                    <span class="el-dropdown-link">
+                        <el-avatar shape="square" :size="40" fit="cover" :src="url" style="margin: 10px 0"></el-avatar>
+                    </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>个人中心</el-dropdown-item>
                         <el-dropdown-item divided>退出登录</el-dropdown-item>
@@ -30,12 +31,19 @@
     import fullscreen from './navbar-item/fullscreen'
     import theme from './navbar-item/theme'
     import search from './navbar-item/search'
+    import news from './navbar-item/news'
     export default {
         name: "Navbar",
         components: {
             fullscreen,
             theme,
-            search
+            search,
+            news
+        },
+        data () {
+            return {
+                url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+            }
         },
         methods: {
             handelChange() {
@@ -78,13 +86,6 @@
                 .el-button{
                     margin-left: 25px;
                 }
-            }
-            img{
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-                overflow: hidden;
-                margin: 10px 0;
             }
         }
 
