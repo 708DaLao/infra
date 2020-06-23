@@ -13,6 +13,8 @@
     <modules>
         <module>infra-business</module>
         <module>infra-support</module>
+        <module>infra-oauth</module>
+        <module>infra-gateway</module>
     </modules>
 
     <properties>
@@ -23,7 +25,9 @@
         <mysql.version>8.0.18</mysql.version>
         <druid.version>1.1.16</druid.version>
         <mybatis.plus.version>3.3.2</mybatis.plus.version>
+        <redis.version>2.3.0.RELEASE</redis.version>
         <lombok.version>1.16.18</lombok.version>
+        <fastjson.version>1.2.70</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -74,12 +78,26 @@
                 <version>${mybatis.plus.version}</version>
             </dependency>
 
+            <!--redis-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+
             <!--lombok-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <optional>true</optional>
+            </dependency>
+
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
         </dependencies>
