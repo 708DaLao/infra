@@ -1,6 +1,6 @@
 package com.infra.server.constant;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
+import com.infra.server.utils.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
