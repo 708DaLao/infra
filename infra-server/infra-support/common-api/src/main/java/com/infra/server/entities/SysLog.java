@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author: zzd
@@ -54,6 +55,6 @@ public class SysLog implements Serializable {
     /**
      * 请求时间
      **/
-    private Data createTime;
+    private Date createTime;
 
 }

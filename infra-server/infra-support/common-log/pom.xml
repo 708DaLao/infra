@@ -12,6 +12,14 @@
     <artifactId>common-log</artifactId>
 
     <dependencies>
+
+        <!--公共api-->
+        <dependency>
+            <groupId>com.infra.server</groupId>
+            <artifactId>common-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!--aop-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -19,8 +27,8 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
 
     </dependencies>
