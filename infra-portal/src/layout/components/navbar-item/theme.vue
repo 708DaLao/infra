@@ -9,12 +9,12 @@
                         direction="rtl"
                         size="23%"
                 >
-                    <el-row type="flex" align="middle" justify="space-around" style="font-size: 18px;color: #303133">
+                    <el-row type="flex" align="middle" justify="space-around">
                         <el-col :span="10">
                             主题背景色:
                         </el-col>
                         <el-col :span="14">
-                            <el-color-picker v-model="color1"></el-color-picker>
+                            <el-color-picker v-model="baseBgColor" size="small" @change="changeThemeBg"></el-color-picker>
                         </el-col>
                     </el-row>
 
@@ -26,17 +26,21 @@
 </template>
 
 <script>
+    import styles from "@/styles/index.scss"
     export default {
         name: "theme",
         data () {
             return {
                 isDrawer: false,
-                color1: '#409EFF',
+                baseBgColor: styles.baseBgColor
             }
         },
         methods: {
             showDrawer() {
                 this.isDrawer = !this.isDrawer
+            },
+            changeThemeBg(value) { // 改变主题背景
+                console.log(value)
             }
         }
     }

@@ -10,6 +10,7 @@ Vue.use(ElementUI)
 import 'normalize.css/normalize.css' //初始化重置css样式
 import 'font-awesome/css/font-awesome.min.css' //使用font-awesome字体图标库
 
+import '@/styles/index.scss' // 全局样式
 
 Vue.config.productionTip = false;
 

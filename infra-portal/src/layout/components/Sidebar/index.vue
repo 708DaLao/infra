@@ -7,7 +7,7 @@
         </div>
         <el-collapse-transition>
             <el-menu
-                background-color="#ebf1f6"
+                :background-color="baseBgColor"
                 :collapse="$store.getters.isCollapse"
             >
                 <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"></sidebar-item>
@@ -18,11 +18,14 @@
 
 <script>
     import SidebarItem from "./SidebarItem";
+    import styles from  "@/styles/index.scss"
     export default {
         name: "Sidebar",
         components: {SidebarItem},
         data() {
-            return {}
+            return {
+                baseBgColor: styles.baseBgColor
+            }
         },
         computed: {
             routes() {

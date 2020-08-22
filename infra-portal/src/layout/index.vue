@@ -23,17 +23,17 @@ export default {
 };
 </script>
 
-<style scoped>
-  .el-header, .el-footer {
-    background-color: #ebf1f6;
+<style lang="scss" scoped>
+  .el-header {
+    background-color: $baseBgColor;
     color: #333;
     text-align: center;
     line-height: 60px;
     padding: 0;
   }
   .el-aside {
-    background-color: #ebf1f6;
     height: 100vh;
+    background-color: $baseBgColor;
   }
 
 </style>

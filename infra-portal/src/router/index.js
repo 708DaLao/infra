@@ -17,6 +17,7 @@ import Layout from '@/layout'
     roles: ['admin','editor']   // 权限
     title: 'title'              // 必需！路由名称
     icon: ''                    // 路由图标
+    keepAlive： true  // 缓存视图组件
   }
  *
  */

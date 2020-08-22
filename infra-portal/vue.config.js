@@ -42,6 +42,14 @@ module.exports = {
   productionSourceMap: false,
   publicPath: "./",
   outputDir: process.env.outputDir, // 生成文件的目录名称，默认dist
+  css: {
+    loaderOptions: {
+      scss: {
+        // 引入全局scss文件
+        prependData: `@import "@/styles/index.scss";`
+      }
+    }
+  },
   chainWebpack: config => {
     config.resolve.alias // 文件指向
       .set("@", resolve("src"))

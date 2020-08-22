@@ -1,0 +1,9 @@
+/*系统布局样式*/
+
+$baseBgColor: #ebf1f6; // 基础背景色
+
+
+// vue使用scss变量需要导出 :export
+:export {
+  baseBgColor: $baseBgColor
+}
