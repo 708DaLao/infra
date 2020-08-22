@@ -1,10 +1,15 @@
 <template>
-    <div>主体区域</div>
+    <router-view :key="key" />
 </template>
 
 <script>
     export default {
-        name: "AppMain"
+        name: "AppMain",
+        computed: {
+            key() {
+                return this.$route.path
+            }
+        }
     }
 </script>
 
