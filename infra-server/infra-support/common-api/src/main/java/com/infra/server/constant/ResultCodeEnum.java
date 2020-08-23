@@ -10,10 +10,10 @@ import lombok.Getter;
 @Getter
 public enum ResultCodeEnum {
 
-    SUCCESS(true, 00 , "成功"),
-    UNKNOWN_ERROR(false,01,"未知错误"),
-    PARAM_ERROR(false,02,"参数错误"),
-    NULL_POINTER(false,03,"空指针异常"),
+    SUCCESS(true, 0 , "成功"),
+    UNKNOWN_ERROR(false,1,"未知错误"),
+    PARAM_ERROR(false,2,"参数错误"),
+    NULL_POINTER(false,3,"空指针异常"),
     NO_FILE_CONTENT(false, 10, "文件内容为空"),
     MAIL_SEND_FAILED(false, 20, "邮件发送失败"),
     CAPTCHA_SEND_FAILED(false, 21, "验证码发送失败");

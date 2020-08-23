@@ -61,7 +61,7 @@ public class WebLogAspect {
          * 重组请求信息
         **/
         StringBuffer sb = new StringBuffer();
-        sb.append("收到请求("+httpServletRequest.getMethod()+"):");
+        sb.append("\r\n收到请求("+httpServletRequest.getMethod()+"):");
         sb.append("\r\nURL : " + httpServletRequest.getRequestURI().toString());
         sb.append("\r\nIP : " + IPUtil.getIpAddr(httpServletRequest));
         sb.append("\r\n响应方法 : " + joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());

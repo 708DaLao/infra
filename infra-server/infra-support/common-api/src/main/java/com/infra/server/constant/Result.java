@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * author: strongmap
  * date: 2020/6/24
  * description: 统一结果类
  * el: return Result.ok().data("itms", list).message("用户列表");
+ * @author zzd
  */
 @Data
 public class Result {
