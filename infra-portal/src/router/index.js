@@ -11,7 +11,7 @@ import Layout from '@/layout'
 /**
  * 路由配置指南：
  * hidden: true  // 为true时侧边栏隐藏此路由
- * alwaysShow: true  // 为true时将一直在侧边栏显示此路由
+ * alwaysShow: true  // 为true时将始终显示根菜单，如果没有设置，当其有子路径时变成嵌套模式，否则不显示根路径
  * name:'router-name'  // 使用<keep-alive>时必需设置name
  * meta : {
     roles: ['admin','editor']   // 权限
@@ -21,12 +21,12 @@ import Layout from '@/layout'
   }
  *
  */
-const routes = [
+export const constantRoutes = [
   {
     path: "/login",
     name: "Login",
     component: Login,
-    hidden: true,
+    meta: { title: '登录页(路由还存在问题)', icon: 'el-icon-help' },
   },
   {
     path: "/",
@@ -36,7 +36,7 @@ const routes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('views/dashboard/index'),
-      meta: { title: '控制台', icon: 'el-icon-help' }
+      meta: { title: '控制台', icon: 'el-icon-help' },
     }]
   },
   {
@@ -102,11 +102,21 @@ const routes = [
       component: () => import('views/404/index'),
       meta: { title: '404', icon: 'el-icon-warning-outline' }
     }]
-  },
+  }
 ];
 
-const router = new VueRouter({
-  routes
-});
+const createRouter = () => new VueRouter({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
 
-export default router;
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router

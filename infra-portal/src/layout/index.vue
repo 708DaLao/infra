@@ -25,7 +25,6 @@ export default {
 
 <style lang="scss" scoped>
   .el-header {
-    background-color: $baseBgColor;
     color: #333;
     text-align: center;
     line-height: 60px;
