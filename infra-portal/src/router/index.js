@@ -10,8 +10,13 @@ import Layout from '@/layout'
 
 /**
  * 路由配置指南：
- * hidden: true  // 为true时侧边栏隐藏此路由
- * alwaysShow: true  // 为true时将始终显示根菜单，如果没有设置，当其有子路径时变成嵌套模式，否则不显示根路径
+ * hidden: true  //  当设置 true 的时候该路由不会在侧边栏出现 如401，login等页面
+ *
+ // 当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面
+ // 只有一个时，会将那个子路由当做根路由显示在侧边栏--如引导页面
+ // 若你想不管路由下面的 children 声明的个数都显示你的根路由
+ // 你可以设置 alwaysShow: true，这样它就会忽略之前定义的规则，一直显示根路由
+ * alwaysShow: true
  * name:'router-name'  // 使用<keep-alive>时必需设置name
  * meta : {
     roles: ['admin','editor']   // 权限
@@ -24,14 +29,16 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: "/login",
-    name: "Login",
-    component: Login,
-    meta: { title: '登录页(路由还存在问题)', icon: 'el-icon-help' },
+    component: Layout,
+    children: [{
+      path: 'login',
+      component: () => import('views/login'),
+      meta: { title: '登录页', icon: 'el-icon-help' },
+    }],
   },
   {
     path: "/",
     component: Layout,
-    redirect: '/dashboard',
     children: [{
       path: 'dashboard',
       name: 'Dashboard',

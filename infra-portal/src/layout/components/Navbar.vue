@@ -58,11 +58,6 @@
 
 <style lang="scss" scoped>
     .navbar{
-        width: 100%;
-        height: 100%;
-        min-width: 900px;
-        background-color: $baseBgColor;
-        /*position: relative;*/
         .header-left{
             float: left;
             display: flex;
@@ -90,8 +85,6 @@
                 }
             }
         }
-
-
     }
 
 </style>
