@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="logo">
-            <img v-if="!$store.getters.isCollapse" src="../../../assets/img/all.png" alt=""
+            <img v-if="!$store.getters.isCollapse" src="../../../assets/img/logo.png" alt=""
                  style="height: 100%;width: 200px">
-            <img v-else src="../../../assets/img/icon-only.png" alt="" style="height: 100%;width: 65px">
+            <img v-else src="../../../assets/img/logo-1.png" alt="" style="height: 100%;width: 65px">
         </div>
         <el-collapse-transition>
             <el-menu

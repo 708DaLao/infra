@@ -1,7 +1,9 @@
+// this.$store.state.xxx
 const state = {
     isCollapse: false // 是否折叠侧边栏
 }
 
+// this.$store.commit()
 const mutations = {
     changeCollapse: (state) => {
         state.isCollapse = !state.isCollapse
@@ -9,6 +11,7 @@ const mutations = {
 
 }
 
+// this.$store.dispatch()
 const actions = {
 
 }

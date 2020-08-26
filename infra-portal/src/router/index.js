@@ -28,15 +28,6 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: "/login",
-    component: Layout,
-    children: [{
-      path: 'login',
-      component: () => import('views/login'),
-      meta: { title: '登录页', icon: 'el-icon-help' },
-    }],
-  },
-  {
     path: "/",
     component: Layout,
     children: [{
@@ -99,6 +90,15 @@ export const constantRoutes = [
         meta: { title: 'menu2' }
       }
     ]
+  },
+  {
+    path: "/login",
+    component: Layout,
+    children: [{
+      path: 'login',
+      component: () => import('views/login'),
+      meta: { title: '登录页', icon: 'el-icon-help' },
+    }],
   },
   {
     path: "/404",
