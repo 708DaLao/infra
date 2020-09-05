@@ -13,8 +13,8 @@
     <modules>
         <module>infra-business</module>
         <module>infra-support</module>
-        <module>infra-oauth</module>
         <module>infra-gateway</module>
+        <module>infra-auth</module>
     </modules>
 
     <properties>

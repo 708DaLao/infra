@@ -1,0 +1,20 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: infra-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: localhost
+    password: 123456
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
