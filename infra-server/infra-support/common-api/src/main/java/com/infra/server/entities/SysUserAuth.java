@@ -23,9 +23,9 @@ public class SysUserAuth implements Serializable {
     **/
     private Long userId;
     /**
-     * 账号（长度11）
+     * 账号
     **/
-    private Integer username;
+    private String username;
     /**
      * 密码
     **/
