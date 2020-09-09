@@ -12,6 +12,7 @@
     <artifactId>infra-gateway</artifactId>
 
     <dependencies>
+
         <!--gateway网关-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -37,15 +38,17 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- swagger 接口文档-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
         </dependency>
 
 

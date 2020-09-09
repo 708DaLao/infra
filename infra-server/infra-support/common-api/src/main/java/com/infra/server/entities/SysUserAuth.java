@@ -1,6 +1,8 @@
 package com.infra.server.entities;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "sys_user_auth")
+@ApiModel(value = "用户鉴权实体",description = "sys_user_auth")
 public class SysUserAuth implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,26 +24,32 @@ public class SysUserAuth implements Serializable {
     /**
      *  用户id
     **/
+    @ApiModelProperty(value = "用户id")
     private Long userId;
     /**
      * 账号
     **/
+    @ApiModelProperty(value = "账号/用户名")
     private String username;
     /**
      * 密码
     **/
+    @ApiModelProperty(value = "密码")
     private String password;
     /**
      * 状态（开启1，锁定0）
     **/
+    @ApiModelProperty(value = "状态")
     private Boolean status;
     /**
      * 上次登录时间
     **/
+    @ApiModelProperty(value = "上次登录时间")
     private Date loginTime;
     /**
      * 上次登录ip
     **/
+    @ApiModelProperty(value = "上次登录Ip")
     private String loginIp;
 
     @TableField(value = "create_time",fill = FieldFill.INSERT)
