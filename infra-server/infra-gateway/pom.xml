@@ -31,6 +31,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--oauth2里面包含security-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
         <!--日常通用jar包配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -21,6 +21,7 @@ public class AuthException implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        System.out.println("自定义token异常");
         // token无效
         ResultCodeEnum resultCodeEnum = ResultCodeEnum.TOKEN_ERROR;
         Map map = new HashMap();

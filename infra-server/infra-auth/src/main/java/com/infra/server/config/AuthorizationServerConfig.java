@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
+import java.security.KeyPair;
 import java.util.Arrays;
 
 /**
@@ -58,6 +59,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
+     *  非对称加密方式
+     */
+    @Bean
+    public KeyPair keyPair() {
+        //从classpath下的证书中获取秘钥对
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "infra123".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", "infra123".toCharArray());
+
+    }
+    /**
      * 对Jwt签名时，增加一个密钥
      * JwtAccessTokenConverter：对Jwt来进行编码以及解码的类
      */
@@ -69,9 +80,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //对称加密方式
 //        jwtAccessTokenConverter.setSigningKey("jwt_zzd");
 
-        //非对称加密方式(jks文件可能过期，jks文件需要Java keytool工具生成)
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "infra123".toCharArray());
-        jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+        jwtAccessTokenConverter.setKeyPair(keyPair());
 
         return jwtAccessTokenConverter;
     }
@@ -118,7 +127,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //指定认证管理器
         endpoints.authenticationManager(authenticationManager);
         endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
-
         //将Token存放到Redis中
         endpoints.tokenStore(tokenStore());
 
