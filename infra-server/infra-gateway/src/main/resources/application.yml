@@ -11,6 +11,27 @@ spring:
       discovery:
         locator:
           enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名称进行路由
+      routes:
+        - id: infra-auth  #认证授权中心服务
+          uri: lb://infra-auth
+          predicates:
+            - Path=/auth/**
+
+        - id: infra-business  #业务服务
+          uri: lb://infra-business
+          predicates:
+            - Path=/api/**
+          #predicates其他方法
+#            - After=2020-03-12T16:44:15.064+08:00[Asia/Shanghai]  #设置在某个时间段之后路由才生效，时区可以通过ZonedDateTime zbj = ZonedDateTime.Now()；获得
+#            - Before=2017-01-20T17:42:47.789-07:00[America/Denver]
+#            - Cookie=username,zzd
+#            - Header=X-Request-Id, \d+ #请求头要有X-Request-Id属性，并且值为正数
+#            - Host=**.baidu.com
+#            - Method=GET
+#            - Query=username, \d+ # 要有参数名username并且值还要是正整数才能路由
+# 过滤
+#          filters:
+#            - AddRequestHeader=X-Request-red, blue
 
 
 

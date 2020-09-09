@@ -3,16 +3,17 @@ package com.infra.server;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * date: 2020/6/16
- * description: 主启动
- * @author infra
+ * @Author: zzd
+ * @Date: 2020/9/9 9:17
+ * @Description:
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @RestController
 @MapperScan("com.infra.server.mapper")
 public class AppRun {
