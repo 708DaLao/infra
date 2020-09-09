@@ -22,13 +22,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 安全拦截机制（最重要）
+     * 一些访问规则：
+     * http.authorizeRequests().antMatchers("/api/**").denyAll();    //拒绝访问
+     * http.authorizeRequests().antMatchers("/api/**").authenticated();    //需认证通过
+     * http.authorizeRequests().antMatchers("/api/**").permitAll();    //无条件允许访问
+     * http.authorizeRequests().antMatchers(HttpMethod.GET).access("permitAll"); 表示所有的get请求都不需要权限认证
+     * http.authorizeRequests().antMatchers(HttpMethod.POST, "/v1/world").hasRole("USER") 匹配/hello，且http method是POST，需要权限认证
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //防csrf攻击
         http.csrf().disable();
         http.authorizeRequests()
-            .antMatchers("/oauth/**").permitAll();
+            .antMatchers("/oauth/**").permitAll()
+            .and();
 
     }
 
