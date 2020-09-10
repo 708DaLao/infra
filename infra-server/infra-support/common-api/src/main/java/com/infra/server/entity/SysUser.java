@@ -1,4 +1,4 @@
-package com.infra.server.entities;
+package com.infra.server.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
