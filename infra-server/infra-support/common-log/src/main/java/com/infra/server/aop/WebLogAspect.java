@@ -138,9 +138,9 @@ public class WebLogAspect {
 
         if (e != null) {
             StringBuffer sb = new StringBuffer();
-            sb.append("时间 : " + DateFormat.getDateTimeInstance().format(new Date()));
-            sb.append("方法 : " + joinPoint.getSignature() + "\n");
-            sb.append("异常信息 : " + e.getMessage());
+            sb.append("\r\n时间 : " + DateFormat.getDateTimeInstance().format(new Date()));
+            sb.append("\r\n方法 : " + joinPoint.getSignature());
+            sb.append("\r\n异常信息 : " + e.getMessage());
             logger.error(sb.toString());
         }
     }

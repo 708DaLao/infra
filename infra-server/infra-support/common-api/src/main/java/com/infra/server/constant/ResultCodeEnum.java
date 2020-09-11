@@ -11,7 +11,7 @@ import lombok.Getter;
 public enum ResultCodeEnum {
 
     SUCCESS(true, 200 , "操作成功"),
-    UNKNOWN_ERROR(false,1,"未知错误"),
+    UNKNOWN_ERROR(false,500,"未知错误"),
     PARAM_ERROR(false,2,"参数错误"),
     NULL_POINTER(false,3,"空指针异常"),
     NO_FILE_CONTENT(false, 10, "文件内容为空"),
@@ -20,7 +20,7 @@ public enum ResultCodeEnum {
     TOKEN_ERROR(false,401,"token无效或过期!"),
     NO_PERMISSION(false,403,"抱歉，您没有访问权限！"),
     NULL_USERNAME(false,404,"该用户不存在！"),
-    ACCOUNT_LOCKED(false,405,"该账号已被锁定！"),
+    ACCOUNT_LOCKED(false,405,"该账号已被锁定！请联系管理员"),
     NULL_CLIENTID(false,404,"该client_id不存在！"),
     REQUEST_TIMEOUT(false,504, "请求超时，请稍后再试！");
 

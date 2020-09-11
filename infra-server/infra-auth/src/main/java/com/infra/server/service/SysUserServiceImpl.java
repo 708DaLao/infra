@@ -41,14 +41,13 @@ public class SysUserServiceImpl implements UserDetailsService {
         if (sysUserAuth == null ) {
             throw new CustomException(ResultCodeEnum.NULL_USERNAME);
         }
-        System.out.println("当前登录用户： "+sysUserAuth);
 
+        // 账户已被锁定则抛出异常
         if (!sysUserAuth.getStatus()) {
             throw new CustomException(ResultCodeEnum.ACCOUNT_LOCKED);
         }
         // 查询当前用户拥有的角色
         List<SysRole> roles = sysUserAuthMapper.getRoleByUserId(sysUserAuth.getUserId());
-        System.out.println("当前用户角色： "+ roles);
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         if (roles.size() != 0 ) {
             for (SysRole role : roles) {
@@ -56,7 +55,6 @@ public class SysUserServiceImpl implements UserDetailsService {
             }
         }
 
-        System.out.println(authorities);
         User user = new User(username, sysUserAuth.getPassword(), authorities);
         return user;
     }

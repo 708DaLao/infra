@@ -54,18 +54,24 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         //客户端支持的grant_type授权类型
         clientDetails.setAuthorizedGrantTypes(Arrays.asList(model.getAuthorizedGrantTypes().split(",")));
         //客户端申请的权限范围
-        clientDetails.setScope(Arrays.asList(model.getScope().split(",")));
+        String scope = model.getScope();
+        if (scope != null ) {
+            clientDetails.setScope(Arrays.asList(scope.split(",")));
+
+        }
+
+        // 设置token的有效期，不设置默认12小时
         Integer accessTokenValidity = model.getAccessTokenValidity();
         if (accessTokenValidity != null && accessTokenValidity > 0) {
-            //设置token的有效期，不设置默认12小时
+
             clientDetails.setAccessTokenValiditySeconds(accessTokenValidity);
         }
+        // 设置刷新token的有效期，不设置默认30天
         Integer refreshTokenValidity = model.getRefreshTokenValidity();
         if (refreshTokenValidity != null && refreshTokenValidity > 0) {
-            //设置刷新token的有效期，不设置默认30天
             clientDetails.setRefreshTokenValiditySeconds(refreshTokenValidity);
         }
-        System.out.println("客户端信息: " + model);
+
         return clientDetails;
     }
 }

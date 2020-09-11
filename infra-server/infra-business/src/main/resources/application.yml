@@ -12,6 +12,10 @@ spring:
     url: jdbc:mysql://localhost:3306/infra?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2b8
     username: root
     password: root
+  redis:
+    database: 1     #0数据库已经给auth服务用来管理令牌之类的
+    host: localhost
+    password: 123456
 
 
 logging:
@@ -20,3 +24,10 @@ logging:
     dao: debug
     org:
       mybatis: debug
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
