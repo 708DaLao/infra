@@ -2,7 +2,7 @@ package com.infra.server.aop;
 
 import com.alibaba.fastjson.JSONObject;
 import com.infra.server.annotation.InfraLog;
-import com.infra.server.entities.SysLog;
+import com.infra.server.entity.SysLog;
 import com.infra.server.mapper.SysLogMapper;
 import com.infra.server.utils.IPUtil;
 import org.aspectj.lang.JoinPoint;

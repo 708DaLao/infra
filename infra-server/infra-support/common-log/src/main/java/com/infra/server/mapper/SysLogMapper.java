@@ -1,7 +1,7 @@
 package com.infra.server.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.infra.server.entities.SysLog;
+import com.infra.server.entity.SysLog;
 
 /**
  * @Author: zzd

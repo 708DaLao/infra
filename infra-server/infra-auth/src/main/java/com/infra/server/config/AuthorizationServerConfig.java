@@ -1,15 +1,13 @@
 package com.infra.server.config;
 
+import com.infra.server.component.JwtTokenEnhancer;
 import com.infra.server.service.ClientDetailsServiceImpl;
 import com.infra.server.service.SysUserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,7 +20,8 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 import javax.annotation.Resource;
 import java.security.KeyPair;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: zzd
@@ -42,64 +41,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
     @Resource
     private ClientDetailsServiceImpl clientDetails;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * 注入自定义token生成方式（jwt）
-     *
-     * @return
-     */
-    @Bean
-    public TokenEnhancer myTokenEnhancer() {
-        return new MyTokenEnhancer();
-    }
-
-    /**
-     *  非对称加密方式
-     */
-    @Bean
-    public KeyPair keyPair() {
-        //从classpath下的证书中获取秘钥对
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "infra123".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("jwt", "infra123".toCharArray());
-
-    }
-    /**
-     * 对Jwt签名时，增加一个密钥
-     * JwtAccessTokenConverter：对Jwt来进行编码以及解码的类
-     */
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-
-        //对称加密方式
-//        jwtAccessTokenConverter.setSigningKey("jwt_zzd");
-
-        jwtAccessTokenConverter.setKeyPair(keyPair());
-
-        return jwtAccessTokenConverter;
-    }
-
-    /**
-     * 使用redis来存储token
-     * Token的可选存储方式
-     * 1、InMemoryTokenStore  内存
-     * 2、JdbcTokenStore  数据库
-     * 3、JwtTokenStore  jwt
-     * 4、RedisTokenStore  redis
-     */
-    @Bean
-    public TokenStore tokenStore() {
-//        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
-//        tokenStore.setPrefix("user-token:");
-//        return tokenStore;
-        return new RedisTokenStore(redisConnectionFactory);
-    }
+    @Resource
+    private SysUserServiceImpl userService;
+    @Resource
+    private JwtTokenEnhancer jwtTokenEnhancer;
 
     /**
      * 定义客户端详情服务
@@ -108,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception{
-        // 从数据库中读取数据
+        // 从数据库中读取客户端数据
         clients.withClientDetails(clientDetails);
     }
 
@@ -126,28 +71,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         //指定认证管理器
         endpoints.authenticationManager(authenticationManager);
-        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
         //将Token存放到Redis中
         endpoints.tokenStore(tokenStore());
 
+        //配置加载用户信息的服务
+        endpoints.userDetailsService(userService);
+
+        // 配置JwtAccessToken转换器
+        endpoints.accessTokenConverter(jwtAccessTokenConverter());
+
         // 自定义token生成方法
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(myTokenEnhancer(), jwtAccessTokenConverter()));
-        endpoints.tokenEnhancer(tokenEnhancerChain);
-
-
-        // 配置TokenServices参数
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-//        DefaultTokenServices tokenServices = (DefaultTokenServices) endpoints.getDefaultAuthorizationServerTokenServices();
-        tokenServices.setTokenStore(endpoints.getTokenStore());
-        // 这里如果设置为false则不能更新refresh_token，如果需要刷新token的功能需要设置成true
-        tokenServices.setSupportRefreshToken(true);
-        // 设置上次RefreshToken是否还可以使用 默认为true
-        tokenServices.setReuseRefreshToken(false);
-        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
-        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-//        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)); // 1天
-        endpoints.tokenServices(tokenServices);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> delegates = new ArrayList<>();
+        delegates.add(jwtTokenEnhancer);
+        delegates.add(jwtAccessTokenConverter());
+        //配置JWT的内容增强器endpoints.tokenEnhancer(tokenEnhancerChain);
+        enhancerChain.setTokenEnhancers(delegates);
 
     }
 
@@ -156,9 +95,49 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients() // 允许表单认证
-                .tokenKeyAccess("permitAll()") //  开启/oauth/token_key验证端口无权限访问
-                .checkTokenAccess("isAuthenticated()");  // 开启/oauth/check_token验证端口认证权限访问
+        security.allowFormAuthenticationForClients(); // 允许表单认证
+    }
+
+
+    /**
+     * 对Jwt签名时，增加一个密钥
+     * JwtAccessTokenConverter：对Jwt来进行编码以及解码的类
+     */
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        //对称加密方式
+//        jwtAccessTokenConverter.setSigningKey("jwt_zzd");
+        // 非对称加密
+        jwtAccessTokenConverter.setKeyPair(keyPair());
+        return jwtAccessTokenConverter;
+    }
+
+    /**
+     *  非对称加密方式
+     */
+    @Bean
+    public KeyPair keyPair() {
+        //从classpath下的证书中获取秘钥对
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "infra123".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", "infra123".toCharArray());
+
+    }
+
+    /**
+     * 使用redis来存储token
+     * Token的可选存储方式
+     * 1、InMemoryTokenStore  内存
+     * 2、JdbcTokenStore  数据库
+     * 3、JwtTokenStore  jwt
+     * 4、RedisTokenStore  redis
+     */
+    @Bean
+    public TokenStore tokenStore() {
+//        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+//        tokenStore.setPrefix("user-token:");
+//        return tokenStore;
+        return new RedisTokenStore(redisConnectionFactory);
     }
 
 }

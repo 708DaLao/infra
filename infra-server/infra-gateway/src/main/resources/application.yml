@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: infra-gateway
+  redis:
+    host: localhost
+    password: 123456
   cloud:
     nacos:
       discovery:
@@ -33,10 +36,22 @@ spring:
 #          filters:
 #            - AddRequestHeader=X-Request-red, blue
 
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:9001/auth/rsa/public_key' #配置RSA的公钥访问地址
 
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+
+
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/actuator/**"
+      - "/auth/oauth/token"

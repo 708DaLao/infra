@@ -1,9 +1,9 @@
 package com.infra.server.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.infra.server.entities.SysRole;
-import com.infra.server.entities.SysRouter;
-import com.infra.server.entities.SysUserAuth;
+import com.infra.server.entity.SysRole;
+import com.infra.server.entity.SysRouter;
+import com.infra.server.entity.SysUserAuth;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

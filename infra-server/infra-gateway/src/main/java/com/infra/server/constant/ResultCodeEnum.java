@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public enum ResultCodeEnum {
 
-    SUCCESS(true, 200 , "操作成功"),
+    SUCCESS(true, 0 , "成功"),
     UNKNOWN_ERROR(false,1,"未知错误"),
     PARAM_ERROR(false,2,"参数错误"),
     NULL_POINTER(false,3,"空指针异常"),

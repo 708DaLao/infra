@@ -3,8 +3,8 @@ package com.infra.server.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infra.server.constant.CustomException;
 import com.infra.server.constant.ResultCodeEnum;
-import com.infra.server.entities.SysRole;
-import com.infra.server.entities.SysUserAuth;
+import com.infra.server.entity.SysRole;
+import com.infra.server.entity.SysUserAuth;
 import com.infra.server.mapper.SysUserAuthMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -56,6 +56,7 @@ public class SysUserServiceImpl implements UserDetailsService {
             }
         }
 
+        System.out.println(authorities);
         User user = new User(username, sysUserAuth.getPassword(), authorities);
         return user;
     }
