@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <optional>true</optional> <!--表示依赖不会传递-->
+<!--            <optional>true</optional> &lt;!&ndash;表示依赖不会传递&ndash;&gt;-->
         </dependency>
 
         <!--mybatis-plus-->
