@@ -14,23 +14,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 
 /**
  * 自定义返回结果：没有权限访问时
- * Created by macro on 2018/4/26.
  */
 @Component
 public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        System.out.println("----------"+denied.getMessage());
+        // denied.getMessage() == Access Denied
         String body= JSONUtil.toJsonStr(Result.setResult(ResultCodeEnum.NO_PERMISSION));
-        DataBuffer buffer =  response.bufferFactory().wrap(body.getBytes(Charset.forName("UTF-8")));
+        DataBuffer buffer =  response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));
     }
 }

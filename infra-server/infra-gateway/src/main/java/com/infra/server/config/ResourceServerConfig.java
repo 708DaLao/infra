@@ -24,7 +24,8 @@ import javax.annotation.Resource;
 
 /**
  * 资源服务器配置
- * Created by macro on 2020/6/19.
+ * @author zzd
+ * @date 2020/6/19
  */
 @Configuration
 @EnableWebFluxSecurity
@@ -60,11 +61,15 @@ public class ResourceServerConfig {
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
 
         http.authorizeExchange()
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()//白名单配置
-                .anyExchange().access(authorizationManager)//鉴权管理器配置
+                // 白名单配置
+                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()
+                // 鉴权管理器配置
+                .anyExchange().access(authorizationManager)
                 .and().exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
-                .authenticationEntryPoint(restAuthenticationEntryPoint)//处理未认证
+                // 处理未授权
+                .accessDeniedHandler(restfulAccessDeniedHandler)
+                // 处理未认证
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and().csrf().disable();
         return http.build();
     }
