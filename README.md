@@ -11,7 +11,7 @@
 服务注册中心 | nacos1.2.1
 配置中心 | nacos1.2.1
 网关 | gateway 
-认证和鉴权方案 | Security+Oauth2+Redis+gateway+mysql
+认证和鉴权方案 | Security+Oauth2+jwt+Redis+gateway+mysql
 
 
 
