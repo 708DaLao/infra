@@ -85,8 +85,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         List<TokenEnhancer> delegates = new ArrayList<>();
         delegates.add(jwtTokenEnhancer);
         delegates.add(jwtAccessTokenConverter());
-        //配置JWT的内容增强器endpoints.tokenEnhancer(tokenEnhancerChain);
         enhancerChain.setTokenEnhancers(delegates);
+        //配置JWT的内容增强器endpoints.tokenEnhancer(tokenEnhancerChain);
+        endpoints.tokenEnhancer(enhancerChain);
 
     }
 

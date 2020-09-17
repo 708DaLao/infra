@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 import Login from "../views/login.vue";
-import NProgress from "nprogress";
 
 /* Layout 布局*/
 import Layout from "@/layout";
@@ -26,16 +25,25 @@ import Layout from "@/layout";
   }
  *
  */
+
+/**
+ * 静态路由
+ */
 export const constantRoutes = [
+  {
+    path: "/login",
+    component: Login,
+    hidden: true
+  },
   {
     path: "/",
     component: Layout,
-    redirect: "dashboard",
+    redirect: "/dashboard",
     children: [
       {
         path: "dashboard",
         name: "Dashboard",
-        component: () => import("views/dashboard/index"),
+        component: () => import("@/views/dashboard/index"),
         meta: { title: "控制台", icon: "el-icon-help" }
       }
     ]
@@ -121,8 +129,7 @@ export const constantRoutes = [
   }
 ];
 
-const createRouter = () =>
-  new VueRouter({
+const createRouter = () => new VueRouter({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes

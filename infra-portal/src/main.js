@@ -3,14 +3,16 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+Vue.use(ElementUI);
 
-import 'normalize.css/normalize.css' //初始化重置css样式
-import 'font-awesome/css/font-awesome.min.css' //使用font-awesome字体图标库
+import "normalize.css/normalize.css"; //初始化重置css样式
+import "font-awesome/css/font-awesome.min.css"; //使用font-awesome字体图标库
 
-import '@/styles/index.scss' // 全局样式
+import "@/styles/index.scss"; // 全局样式
+
+import "./permission"; // 权限控制
 
 Vue.config.productionTip = false;
 

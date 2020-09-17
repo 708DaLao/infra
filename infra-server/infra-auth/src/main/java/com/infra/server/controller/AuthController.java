@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import java.security.KeyPair;
 import java.security.Principal;
 import java.security.interfaces.RSAPublicKey;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -40,17 +42,20 @@ public class AuthController {
     }
 
 
-//    @ApiOperation("自定义Oauth2获取令牌接口")
-//    @PostMapping("/oauth/token")
-//    public Result postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
-//        OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
-//        Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()
-//                .token(oAuth2AccessToken.getValue())
-//                .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
-//                .expiresIn(oAuth2AccessToken.getExpiresIn())
-//                .tokenHead("Bearer ").build();
-//
-//        return Result.ok().data("Access_token",oauth2TokenDto).message("获取token成功！");
-//    }
+    /**
+     * 自定义返回格式
+     */
+    @ApiOperation("自定义Oauth2获取令牌接口返回格式")
+    @PostMapping("/oauth/token")
+    public Result postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+        OAuth2AccessToken accessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
+        Map<String,Object> map = new HashMap<>();
+        map.put("access_token", accessToken.getValue());
+        if (accessToken.getRefreshToken() != null) {
+            map.put("refresh_token",accessToken.getRefreshToken().getValue());
+        }
+        map.put("expires_in",accessToken.getExpiresIn());
+        return Result.ok().data(map).message("获取token成功!");
+    }
 
 }
