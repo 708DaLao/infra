@@ -1,7 +1,6 @@
 package com.infra.server.controller;
 
 import com.infra.server.constant.Result;
-import com.infra.server.dto.Oauth2TokenDto;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import io.swagger.annotations.Api;
@@ -16,7 +15,6 @@ import java.security.KeyPair;
 import java.security.Principal;
 import java.security.interfaces.RSAPublicKey;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
