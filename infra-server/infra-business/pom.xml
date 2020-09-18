@@ -49,6 +49,14 @@
             <artifactId>druid</artifactId>
         </dependency>
 
+        <!--JWT解析库-->
+        <!--参考：https://blog.csdn.net/yelvgou9995/article/details/107180816/-->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>8.20</version>
+        </dependency>
+
         <!--日常通用jar包配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
