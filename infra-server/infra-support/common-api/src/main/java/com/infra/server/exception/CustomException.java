@@ -1,5 +1,6 @@
-package com.infra.server.constant;
+package com.infra.server.exception;
 
+import com.infra.server.api.ResultCodeEnum;
 import lombok.Data;
 
 /**

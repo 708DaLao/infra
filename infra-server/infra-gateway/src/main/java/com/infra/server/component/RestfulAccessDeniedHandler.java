@@ -1,8 +1,8 @@
 package com.infra.server.component;
 
 import cn.hutool.json.JSONUtil;
-import com.infra.server.constant.Result;
-import com.infra.server.constant.ResultCodeEnum;
+import com.infra.server.api.Result;
+import com.infra.server.api.ResultCodeEnum;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

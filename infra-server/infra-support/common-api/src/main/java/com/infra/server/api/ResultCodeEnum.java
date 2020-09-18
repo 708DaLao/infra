@@ -1,11 +1,11 @@
-package com.infra.server.constant;
+package com.infra.server.api;
 
 import lombok.Getter;
 
 /**
- * author: zzd
  * date: 2020/6/24
  * description: 结果类枚举，全局统一结果处理
+ * @author zzd
  */
 @Getter
 public enum ResultCodeEnum {

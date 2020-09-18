@@ -1,8 +1,8 @@
 package com.infra.server.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.infra.server.constant.CustomException;
-import com.infra.server.constant.ResultCodeEnum;
+import com.infra.server.exception.CustomException;
+import com.infra.server.api.ResultCodeEnum;
 import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysUserAuth;
 import com.infra.server.mapper.SysUserAuthMapper;

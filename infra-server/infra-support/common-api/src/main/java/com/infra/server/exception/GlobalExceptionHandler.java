@@ -1,5 +1,7 @@
-package com.infra.server.constant;
+package com.infra.server.exception;
 
+import com.infra.server.api.Result;
+import com.infra.server.api.ResultCodeEnum;
 import com.infra.server.utils.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;

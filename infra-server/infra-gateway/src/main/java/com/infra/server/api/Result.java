@@ -1,4 +1,4 @@
-package com.infra.server.constant;
+package com.infra.server.api;
 
 import lombok.Data;
 

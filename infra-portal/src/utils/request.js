@@ -1,51 +1,78 @@
-import axios from 'axios'
-import { Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import axios from "axios";
+import { Message, MessageBox } from "element-ui";
+import store from "@/store";
+import { getToken } from "@/utils/auth";
 
 const http = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-    // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
-})
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
+});
 
 // request拦截器
 http.interceptors.request.use(
-    config => {
-        if (store.getters.token) {
-            config.headers['Infra-Token'] = getToken() // 每个请求都携带token
-        }
-        return config
-    },
-    error => {
-        // do something with request error
-        console.log(error) // for debug
-        return Promise.reject(error)
+  config => {
+    if (store.getters.token) {
+      config.headers["Authorization"] = "Bearer " + getToken(); // 每个请求都携带token
     }
-)
+    return config;
+  },
+  error => {
+    // do something with request error
+    console.log(error); // for debug
+    return Promise.reject(error);
+  }
+);
 
 // response拦截器
 http.interceptors.response.use(
-    response => {
-        const res = response.data
+  response => {
+    const res = response.data;
 
-        // if the custom code is not 20000, it is judged as an error.
-        if (res.code !== 200) {
-            console.log(JSON.stringify(res))
-            return Promise.reject(new Error(res.message || 'Error'))
-        } else {
-            return res
-        }
-    },
-    error => {
-        console.log('err' + error) // for debug
+    if (response.error_description) {
+      Message({
+        message: response.error_description || "Error",
+        type: "error",
+        duration: 5 * 1000
+      });
+    } else {
+      // if the custom code is not 20000, it is judged as an error.
+      if (res.code !== 200) {
         Message({
-            message: error.message,
-            type: 'error',
-            duration: 5 * 1000
-        })
-        return Promise.reject(error)
-    }
-)
+          message: res.message || "Error",
+          type: "error",
+          duration: 5 * 1000
+        });
 
-export default http
+        if (res.code === 401) {
+          MessageBox.confirm(
+            "您可以选择退出重新登录，或继续留在此页面",
+            "确认是否退出",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          ).then(() => {
+            store.dispatch("user/resetToken").then(() => {
+              location.reload();
+            });
+          });
+        }
+        return Promise.reject(new Error(res.message || "Error"));
+      } else {
+        return res;
+      }
+    }
+  },
+  error => {
+    Message({
+      message: error.message,
+      type: "error",
+      duration: 5 * 1000
+    });
+    return Promise.reject(error);
+  }
+);
+
+export default http;

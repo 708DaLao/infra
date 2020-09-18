@@ -1,7 +1,7 @@
 //package com.infra.server.controller;
 //
-//import com.infra.server.constant.Result;
-//import com.infra.server.constant.ResultCodeEnum;
+//import com.infra.server.api.Result;
+//import com.infra.server.api.ResultCodeEnum;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.context.SecurityContext;
