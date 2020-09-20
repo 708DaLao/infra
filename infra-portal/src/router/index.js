@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import Login from "../views/login.vue";
+import Login from "../views/login/index";
 
 /* Layout 布局*/
 import Layout from "@/layout";
@@ -105,12 +105,12 @@ export const constantRoutes = [
     ]
   },
   {
-    path: "/login",
+    path: "/login2",
     component: Layout,
     children: [
       {
-        path: "login",
-        component: () => import("views/login"),
+        path: "index",
+        component: () => import("views/login/index"),
         meta: { title: "登录页", icon: "el-icon-help" }
       }
     ]

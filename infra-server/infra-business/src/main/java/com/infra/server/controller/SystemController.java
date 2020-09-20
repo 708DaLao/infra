@@ -1,5 +1,6 @@
 package com.infra.server.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.infra.server.holder.LoginUserHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ public class SystemController {
 
     @ApiOperation("获取当前登录用户")
     @GetMapping("/current_user")
-    public String currentUser() {
+    public JSONObject currentUser() {
         return loginUserHolder.getCurrentUser();
     }
 }

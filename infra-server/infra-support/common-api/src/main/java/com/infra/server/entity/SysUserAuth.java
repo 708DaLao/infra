@@ -51,6 +51,11 @@ public class SysUserAuth implements Serializable {
     **/
     @ApiModelProperty(value = "上次登录Ip")
     private String loginIp;
+    /**
+     * 是否在线（是1，否0）
+     **/
+    @ApiModelProperty(value = "是否在线")
+    private Boolean online;
 
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private Date createTime;

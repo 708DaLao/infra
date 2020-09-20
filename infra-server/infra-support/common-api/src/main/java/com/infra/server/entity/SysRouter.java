@@ -23,25 +23,36 @@ public class SysRouter implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     /**
-     * 路劲
+     * 路由标题
+     */
+    @ApiModelProperty(value = "路由标题")
+    private String title;
+    /**
+     * 路由图标
+     */
+    @ApiModelProperty(value = "路由图标")
+    private String icon;
+    /**
+     * 路径
      */
     @ApiModelProperty(value = "路径")
     private String path;
     /**
-     * 路由名称
+     * 路由名称，要缓存视图组件，必须设置唯一name
      */
-    @ApiModelProperty(value = "路由名称")
+    @ApiModelProperty(value = "路由名称，要缓存视图组件，必须设置唯一name")
     private String name;
+    /**
+     * 是否缓存视图组件
+     */
+    @ApiModelProperty(value = "是否缓存视图组件")
+    private Boolean keepAlive;
     /**
      * 组件路劲
      */
     @ApiModelProperty(value = "组件路径")
     private String component;
-    /**
-     * 元数据（包含title,icon等）
-     */
-    @ApiModelProperty(value = "元数据json格式，包含title、icon")
-    private String meta;
+
     /**
      * 重定向路劲
      */

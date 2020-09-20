@@ -30,6 +30,9 @@ public class ResourceServiceImpl {
         Map<String, Object> resourceRolesMap = new HashMap<>();
         resourceRolesMap.put("/api/hello","ADMIN".split(","));
         resourceRolesMap.put("/api/user", "ADMIN,TEST".split(","));
+        resourceRolesMap.put("/api/system/current_user", "ADMIN,TEST".split(","));
+        resourceRolesMap.put("/api/sys_user/info", "ADMIN,TEST".split(","));
+        resourceRolesMap.put("/api/role/permission", "ADMIN,TEST".split(","));
         redisUtil.hmset(RESOURCE_ROLES_MAP, resourceRolesMap);
     }
 }

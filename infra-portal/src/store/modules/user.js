@@ -6,16 +6,12 @@ const state = {
   token: getToken(),
   nickname: "",
   avatar: "",
-  introduction: "",
   roles: []
 };
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token;
-  },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction;
   },
   SET_NICKNAME: (state, nickname) => {
     state.nickname = nickname;
@@ -29,7 +25,7 @@ const mutations = {
 };
 
 const actions = {
-  // user login
+  // 用户登录
   login({ commit }, data) {
     return new Promise((resolve, reject) => {
       login(data)
@@ -45,28 +41,25 @@ const actions = {
     });
   },
 
-  // get user info
+  // 获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
           const { data } = response;
+          console.log(data)
 
           if (!data) {
-            reject("Verification failed, please Login again.");
+            reject("验证失败，请重新登录！");
           }
-
-          const { roles, nickname, avatar, introduction } = data;
-
-          // roles must be a non-empty array
+          const { roles, info } = data;
           if (!roles || roles.length <= 0) {
-            reject("getInfo: roles must be a non-null array!");
+            reject("角色不能为空，且为数组！");
           }
 
           commit("SET_ROLES", roles);
-          commit("SET_NICKNAME", nickname);
-          commit("SET_AVATAR", avatar);
-          commit("SET_INTRODUCTION", introduction);
+          commit("SET_NICKNAME", info.nickname);
+          commit("SET_AVATAR", info.avatar);
           resolve(data);
         })
         .catch(error => {

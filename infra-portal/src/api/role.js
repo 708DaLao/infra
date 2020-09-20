@@ -1,10 +1,13 @@
 import request from '@/utils/request'
 
-export function getRoutesByRoles(roles) {
+/**
+ * 根据角色获取权限
+ */
+export function getPermissionByRoles(roles) {
   return request({
-    url: '/vue-element-admin/routes',
+    url: '/api/role/permission',
     method: 'get',
-    data: roles
+    params: roles
   })
 }
 

@@ -35,11 +35,6 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "真实姓名")
     private String realname;
     /**
-     * 角色
-    **/
-    @ApiModelProperty(value = "角色")
-    private String role;
-    /**
      * 头像
     **/
     @ApiModelProperty(value = "头像")
@@ -69,11 +64,6 @@ public class SysUser implements Serializable {
     **/
     @ApiModelProperty(value = "住址")
     private String addr;
-    /**
-     * 是否在线（是1，否0）
-    **/
-    @ApiModelProperty(value = "是否在线")
-    private Boolean online;
 
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private Date createTime;

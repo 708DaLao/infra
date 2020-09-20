@@ -123,7 +123,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url("../assets/bg.jpg") no-repeat;
+  background: url("../../assets/bg.jpg") no-repeat;
   background-size: cover;
   .main {
     width: 300px;
