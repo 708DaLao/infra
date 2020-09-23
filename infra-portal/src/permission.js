@@ -4,7 +4,7 @@ import store from "./store";
 import NProgress from "nprogress"; // 进度条
 import "nprogress/nprogress.css"; // 进度条样式
 import { getToken } from "./utils/auth";
-import { Message } from 'element-ui'
+import { Message } from "element-ui";
 
 const whiteList = ["/login"]; // no redirect whitelist
 
@@ -28,13 +28,16 @@ router.beforeEach(async (to, from, next) => {
           // 获取当前用户角色，根据角色去获取路由
           const { roles } = await store.dispatch("user/getInfo");
           // 获取动态路由,即角色的路由
-          const { asyncRoutes } = await store.dispatch("role/getAsyncRoutes", roles);
+          const { asyncRoutes } = await store.dispatch(
+            "role/getAsyncRoutes",
+            roles
+          );
           // 添加路由
           router.addRoutes(asyncRoutes);
           next({ ...to, replace: true });
         } catch (e) {
           await store.dispatch("user/resetToken");
-          Message.error(e || '获取信息异常')
+          Message.error(e || "获取信息异常");
           next(`/login?redirect=${to.path}`);
           NProgress.done();
         }

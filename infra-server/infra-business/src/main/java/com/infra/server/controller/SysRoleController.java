@@ -1,20 +1,24 @@
 package com.infra.server.controller;
 
-import cn.hutool.core.util.ArrayUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infra.server.api.Result;
 import com.infra.server.entity.SysRole;
+import com.infra.server.entity.SysRoleRouter;
+import com.infra.server.entity.SysRouter;
 import com.infra.server.mapper.SysRoleMapper;
+import com.infra.server.mapper.SysRoleRouterMapper;
+import com.infra.server.service.SysRoleService;
+import com.infra.server.service.SysRouterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: zzd
@@ -27,17 +31,35 @@ import java.util.List;
 public class SysRoleController {
 
     @Resource
-    private SysRoleMapper sysRoleMapper;
+    private SysRoleService sysRoleService;
+    @Resource
+    private SysRoleRouterMapper sysRoleRouterMapper;
+    @Resource
+    private SysRouterService sysRouterService;
 
 
     @ApiOperation("根据角色获取角色权限")
     @GetMapping("/permission")
-    public Result getPermissionByRoles(@RequestParam Object roles) {
-        System.out.println("角色：----- "+roles);
+    public Result getPermissionByRoles(@RequestParam String roles) {
+        Object[] obj = roles.split(",");
+        // 批量查询角色信息
         QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in("name",roles);
-        List<SysRole> roleList = sysRoleMapper.selectList(queryWrapper);
-        System.out.println(JSONObject.toJSONString(roleList));
+        queryWrapper.in("name",obj);
+        List<SysRole> roleList = sysRoleService.list(queryWrapper);
+
+        // 取出角色数组的id
+        List<Integer> roleIds = roleList.stream().map(SysRole::getId).collect(Collectors.toList());
+        // 批量查询路由id根据角色id
+        QueryWrapper<SysRoleRouter> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.in("role_id",roleIds);
+        List<SysRoleRouter> sysRoleRouterList = sysRoleRouterMapper.selectList(queryWrapper1);
+
+        // 取出路由数组是id
+        List<Integer> routeIds = sysRoleRouterList.stream().map(SysRoleRouter::getRouterId).collect(Collectors.toList());
+        // 批量查询路由根据路由id
+        List<SysRouter> sysRouterList = sysRouterService.listByIds(routeIds);
+        System.out.println(sysRouterList);
+
 
         return null;
     }
