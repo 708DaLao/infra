@@ -5,18 +5,9 @@ import request from "@/utils/request";
  */
 export function login(data) {
   return request({
-    url:
-      "/auth/oauth/token?grant_type=" +
-      data.grant_type +
-      "&client_id=" +
-      data.client_id +
-      "&client_secret=" +
-      data.client_secret +
-      "&username=" +
-      data.username +
-      "&password=" +
-      data.password,
-    method: "post"
+    url: "/auth/oauth/token",
+    method: "post",
+    params: data
   });
 }
 
