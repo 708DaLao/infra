@@ -4,7 +4,7 @@ import store from "@/store";
 import { getToken } from "@/utils/auth";
 
 const http = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "/api", // 使用代理解决跨域问题
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 });
