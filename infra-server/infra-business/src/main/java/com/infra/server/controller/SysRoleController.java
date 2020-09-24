@@ -1,19 +1,16 @@
 package com.infra.server.controller;
 
-import com.alibaba.fastjson.JSONArray;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infra.server.api.Result;
 import com.infra.server.entity.SysRole;
-import com.infra.server.entity.SysRoleRouter;
 import com.infra.server.entity.SysRouter;
-import com.infra.server.mapper.SysRoleMapper;
-import com.infra.server.mapper.SysRoleRouterMapper;
 import com.infra.server.service.SysRoleService;
-import com.infra.server.service.SysRouterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,35 +29,34 @@ public class SysRoleController {
 
     @Resource
     private SysRoleService sysRoleService;
-    @Resource
-    private SysRoleRouterMapper sysRoleRouterMapper;
-    @Resource
-    private SysRouterService sysRouterService;
-
 
     @ApiOperation("根据角色获取角色权限")
     @GetMapping("/permission")
     public Result getPermissionByRoles(@RequestParam String roles) {
-        Object[] obj = roles.split(",");
+        String[] roleName = roles.split(",");
         // 批量查询角色信息
         QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in("name",obj);
+        queryWrapper.in("name",roleName);
         List<SysRole> roleList = sysRoleService.list(queryWrapper);
 
         // 取出角色数组的id
         List<Integer> roleIds = roleList.stream().map(SysRole::getId).collect(Collectors.toList());
-        // 批量查询路由id根据角色id
-        QueryWrapper<SysRoleRouter> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.in("role_id",roleIds);
-        List<SysRoleRouter> sysRoleRouterList = sysRoleRouterMapper.selectList(queryWrapper1);
+        // 根据角色id查询对应的路由列表
+        List<SysRouter> sysRouterList = sysRoleService.getRouterByRoleIds(roleIds);
 
-        // 取出路由数组是id
-        List<Integer> routeIds = sysRoleRouterList.stream().map(SysRoleRouter::getRouterId).collect(Collectors.toList());
-        // 批量查询路由根据路由id
-        List<SysRouter> sysRouterList = sysRouterService.listByIds(routeIds);
-        System.out.println(sysRouterList);
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        treeNodeConfig.setParentIdKey("pid");
 
+        List<Tree<String>> treeNodes = TreeUtil.build(sysRouterList, "0", treeNodeConfig,
+                (treeNode, tree) -> {
+                    tree.setId(treeNode.getId().toString());
+                    tree.setParentId(treeNode.getPid().toString());
+                    // 扩展属性 ...
+                    tree.putExtra("path", treeNode.getPath());
+                    tree.putExtra("component", treeNode.getComponent());
+                });
 
+        System.out.println(JSONObject.toJSONString(treeNodes));
         return null;
     }
 }
