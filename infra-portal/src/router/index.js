@@ -18,7 +18,6 @@ import Layout from "@/layout";
  * alwaysShow: true
  * name:'router-name'  // 使用<keep-alive>时必需设置name
  * meta : {
-    roles: ['admin','editor']   // 权限
     title: 'title'              // 必需！路由名称
     icon: ''                    // 路由图标
     keepAlive： true  // 缓存视图组件

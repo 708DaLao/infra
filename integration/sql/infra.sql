@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 20/09/2020 16:20:25
+ Date: 25/09/2020 17:14:49
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `oauth_client_details`  (
   `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段',
   `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户是否自动Approval操作',
   PRIMARY KEY (`client_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_client_details
@@ -57,7 +57,7 @@ CREATE TABLE `sys_log`  (
   `exception` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求异常',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
@@ -105,7 +105,7 @@ CREATE TABLE `sys_role`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -122,7 +122,7 @@ CREATE TABLE `sys_role_router`  (
   `role_id` int(10) NULL DEFAULT NULL COMMENT '角色id',
   `router_id` int(10) NULL DEFAULT NULL COMMENT '角色路由权限,即菜单',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色路由关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色路由关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_router
@@ -140,25 +140,25 @@ CREATE TABLE `sys_router`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由标题',
   `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路径',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路径,path为关键字',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由名称，要缓存视图组件，必须设置唯一name',
-  `keep_alive` tinyint(1) NULL DEFAULT NULL COMMENT '是否缓存视图组件',
+  `keep_alive` tinyint(1) NULL DEFAULT 0 COMMENT '是否缓存视图组件',
   `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件路径',
   `redirect` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '重定向路径',
-  `pid` int(10) NULL DEFAULT NULL COMMENT '父id',
-  `hidden` tinyint(1) NULL DEFAULT NULL COMMENT '是否隐藏(是true,否false)',
-  `always_show` tinyint(1) NULL DEFAULT NULL COMMENT '是否显示根菜单（true,false）',
+  `parent_id` int(10) NULL DEFAULT NULL COMMENT '父id,根节点为0',
+  `hidden` tinyint(1) NULL DEFAULT 0 COMMENT '是否隐藏(是true,否false)',
+  `always_show` tinyint(1) NULL DEFAULT 0 COMMENT '是否显示根菜单（true,false）',
   `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_router
 -- ----------------------------
-INSERT INTO `sys_router` VALUES (1, '', '', '/login2', NULL, NULL, 'Layout', NULL, NULL, NULL, NULL, 10);
-INSERT INTO `sys_router` VALUES (2, '登录页', 'el-icon-help', 'index', NULL, NULL, 'views/login/index', NULL, 1, NULL, NULL, 11);
-INSERT INTO `sys_router` VALUES (3, NULL, NULL, '/404', NULL, NULL, 'Layout', NULL, NULL, NULL, NULL, 20);
-INSERT INTO `sys_router` VALUES (4, '404', 'el-icon-warning-outline', 'index', NULL, NULL, 'views/error/404/index', NULL, 3, NULL, NULL, 21);
+INSERT INTO `sys_router` VALUES (1, '', '', '/login2', '', 0, 'Layout', '', 0, 0, 0, 10);
+INSERT INTO `sys_router` VALUES (2, '登录页', 'el-icon-help', 'index', NULL, 0, 'views/login/index', NULL, 1, 0, 0, 11);
+INSERT INTO `sys_router` VALUES (3, NULL, NULL, '/404', NULL, 0, 'Layout', NULL, 0, 0, 0, 20);
+INSERT INTO `sys_router` VALUES (4, '404', 'el-icon-warning-outline', 'index', NULL, 0, 'views/error/404/index', NULL, 3, 0, 0, 21);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -177,7 +177,7 @@ CREATE TABLE `sys_user`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户基础信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户基础信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -201,7 +201,7 @@ CREATE TABLE `sys_user_auth`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户授权表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户授权表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_auth
@@ -218,12 +218,13 @@ CREATE TABLE `sys_user_role`  (
   `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
   `role_id` int(10) NULL DEFAULT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, 1599526134, 1);
 INSERT INTO `sys_user_role` VALUES (2, 1599705554, 2);
+INSERT INTO `sys_user_role` VALUES (3, 1599526134, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;

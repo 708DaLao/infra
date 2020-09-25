@@ -32,6 +32,7 @@ router.beforeEach(async (to, from, next) => {
             "role/getAsyncRoutes",
             roles
           );
+          console.log(asyncRoutes)
           // 添加路由
           router.addRoutes(asyncRoutes);
           next({ ...to, replace: true });

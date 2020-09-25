@@ -62,7 +62,7 @@ public class SysRouter implements Serializable {
      * 父id
      */
     @ApiModelProperty(value = "上级id")
-    private Integer pid;
+    private Integer parentId;
     /**
      * 是否隐藏（是true，否false）
      */

@@ -16,7 +16,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       getPermissionByRoles(roles)
         .then(response => {
-          const { asyncRoutes } = response;
+          const { data } = response;
+          const { asyncRoutes } = data;
+          let aa = delete data.asyncRoutes.id
+            console.log(aa)
           commit("SET_ASYNCROUTES", asyncRoutes);
           resolve();
         })
