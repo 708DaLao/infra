@@ -1,7 +1,5 @@
 package com.infra.server.controller;
 
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -46,7 +44,7 @@ public class SysRoleController {
         // 根据角色id查询对应的路由列表
         List<SysRouter> sysRouterList = sysRoleService.getRouterByRoleIds(roleIds);
         // 构造路由树
-        List<Tree<String>> asyncRoutes = getRouterTree(sysRouterList);
+        List<Object> asyncRoutes = filterRouter(sysRouterList);
 
         System.out.println(JSONObject.toJSONString(asyncRoutes));
         // 返回权限
@@ -55,42 +53,65 @@ public class SysRoleController {
     }
 
     /**
-     * 构建路由树
+     * 递归遍历构造路由树
      */
-    public List<Tree<String>> getRouterTree(List<SysRouter> sysRouterList) {
-        // 自定义属性名，详见Hutool树工具
-        // https://hutool.cn/docs/#/core/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/%E6%A0%91%E7%BB%93%E6%9E%84/%E6%A0%91%E7%BB%93%E6%9E%84%E5%B7%A5%E5%85%B7-TreeUtil
-//        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
-//        treeNodeConfig.setParentIdKey("pid");
-        List<Tree<String>> routers = TreeUtil.build(sysRouterList, "0",
-                (router, tree) -> {
-                    tree.setId(router.getId().toString());
-                    tree.setParentId(router.getParentId().toString());
-                    // 扩展属性 ...
-                    tree.putExtra("path", router.getPath());
-                    tree.putExtra("component", router.getComponent());
-                    if (!StrUtil.hasEmpty(router.getRedirect())) {
-                        tree.putExtra("redirect",router.getRedirect());
-                    }
-                    if (!StrUtil.hasEmpty(router.getName())) {
-                        tree.putExtra("name",router.getName());
-                    }
-                    Map<String,Object> meta = new HashMap<>();
-                    meta.put("title",router.getTitle());
-                    meta.put("icon",router.getIcon());
-                    if (router.getKeepAlive()) {
-                        meta.put("keepAlive",router.getKeepAlive());
-                    }
-                    if (!StrUtil.hasEmpty(router.getTitle()) || !StrUtil.hasEmpty(router.getIcon())) {
-                        tree.putExtra("meta", meta);
-                    }
-                    if (router.getHidden()) {
-                        tree.putExtra("hidden",router.getHidden());
-                    }
-                    if (router.getAlwaysShow()) {
-                        tree.putExtra("alwaysShow",router.getAlwaysShow());
-                    }
-                });
-        return routers;
+    public List<Object> filterRouter(List<SysRouter> sysRouterList) {
+        List<Object> list = new ArrayList<>();
+        for (SysRouter r : sysRouterList) {
+            // 根节点父id为0
+            if (r.getParentId() == 0) {
+                routerData(sysRouterList, list, r);
+            }
+        }
+        return list;
     }
+
+    /**
+     * 获取子路由
+     */
+    public List<Object> getChildren(Integer id,List<SysRouter> sysRouterList){
+        List<Object> list = new ArrayList<>();
+        for (SysRouter r : sysRouterList) {
+            if (r.getParentId().equals(id)) {
+                routerData(sysRouterList, list, r);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 路由结构
+     */
+    private void routerData(List<SysRouter> sysRouterList, List<Object> list, SysRouter r) {
+        JSONObject object = new JSONObject();
+        object.put("path",r.getPath());
+        object.put("component",r.getComponent());
+        if (!StrUtil.hasEmpty(r.getRedirect())) {
+            object.put("redirect",r.getRedirect());
+        }
+        if (!StrUtil.hasEmpty(r.getName())) {
+            object.put("name",r.getName());
+        }
+        Map<String,Object> meta = new HashMap<>();
+        meta.put("title",r.getTitle());
+        meta.put("icon",r.getIcon());
+        if (r.getKeepAlive()) {
+            meta.put("keepAlive",r.getKeepAlive());
+        }
+        if (!StrUtil.hasEmpty(r.getTitle()) || !StrUtil.hasEmpty(r.getIcon())) {
+            object.put("meta", meta);
+        }
+        if (r.getHidden()) {
+            object.put("hidden",r.getHidden());
+        }
+        if (r.getAlwaysShow()) {
+            object.put("alwaysShow",r.getAlwaysShow());
+        }
+        List<Object> children = getChildren(r.getId(),sysRouterList);
+        if (children.size() > 0) {
+            object.put("children",children);
+        }
+        list.add(object);
+    }
+
 }

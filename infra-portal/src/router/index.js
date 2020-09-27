@@ -103,29 +103,29 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: "/login2",
-    component: Layout,
-    children: [
-      {
-        path: "index",
-        component: () => import("views/login/index"),
-        meta: { title: "登录页", icon: "el-icon-help" }
-      }
-    ]
-  },
-  {
-    path: "/404",
-    component: Layout,
-    children: [
-      {
-        path: "index",
-        name: "index",
-        component: () => import("@/views/error/404/index"),
-        meta: { title: "404", icon: "el-icon-warning-outline" }
-      }
-    ]
-  }
+  // {
+  //   path: "/login2",
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: "index",
+  //       component: () => import("views/login/index"),
+  //       meta: { title: "登录页", icon: "el-icon-help" }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/404",
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: "index",
+  //       name: "index",
+  //       component: () => import("@/views/error/404/index"),
+  //       meta: { title: "404", icon: "el-icon-warning-outline" }
+  //     }
+  //   ]
+  // }
 ];
 
 const createRouter = () => new VueRouter({

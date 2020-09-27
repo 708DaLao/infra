@@ -28,11 +28,11 @@ router.beforeEach(async (to, from, next) => {
           // 获取当前用户角色，根据角色去获取路由
           const { roles } = await store.dispatch("user/getInfo");
           // 获取动态路由,即角色的路由
-          const { asyncRoutes } = await store.dispatch(
+          const asyncRoutes = await store.dispatch(
             "role/getAsyncRoutes",
             roles
           );
-          console.log(asyncRoutes)
+          console.log(asyncRoutes);
           // 添加路由
           router.addRoutes(asyncRoutes);
           next({ ...to, replace: true });

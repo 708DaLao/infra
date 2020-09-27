@@ -1,4 +1,5 @@
 import { getPermissionByRoles } from "../../api/role";
+import { filterAsyncRouter } from "../../utils/permission";
 
 const state = {
   asyncRoutes: [] // 动态路由
@@ -17,11 +18,9 @@ const actions = {
       getPermissionByRoles(roles)
         .then(response => {
           const { data } = response;
-          const { asyncRoutes } = data;
-          let aa = delete data.asyncRoutes.id
-            console.log(aa)
+          const asyncRoutes = filterAsyncRouter(data.asyncRoutes);
           commit("SET_ASYNCROUTES", asyncRoutes);
-          resolve();
+          resolve(asyncRoutes);
         })
         .catch(err => {
           reject(err);
