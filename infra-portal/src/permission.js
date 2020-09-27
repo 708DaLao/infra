@@ -32,10 +32,10 @@ router.beforeEach(async (to, from, next) => {
             "role/getAsyncRoutes",
             roles
           );
-          console.log(asyncRoutes);
           // 添加路由
+          router.options.routes = asyncRoutes
           router.addRoutes(asyncRoutes);
-          next({ ...to, replace: true });
+          next();
         } catch (e) {
           await store.dispatch("user/resetToken");
           Message.error(e || "获取信息异常");

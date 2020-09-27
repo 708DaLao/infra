@@ -1,8 +1,6 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-Vue.use(VueRouter);
-
-import Login from "../views/login/index";
+import Router from "vue-router";
+Vue.use(Router);
 
 /* Layout 布局*/
 import Layout from "@/layout";
@@ -31,7 +29,7 @@ import Layout from "@/layout";
 export const constantRoutes = [
   {
     path: "/login",
-    component: Login,
+    component: () => import("@/views/login/index"),
     hidden: true
   },
   {
@@ -102,7 +100,7 @@ export const constantRoutes = [
         meta: { title: "menu2" }
       }
     ]
-  },
+  }
   // {
   //   path: "/login2",
   //   component: Layout,
@@ -128,7 +126,8 @@ export const constantRoutes = [
   // }
 ];
 
-const createRouter = () => new VueRouter({
+const createRouter = () =>
+  new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes

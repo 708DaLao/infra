@@ -9,10 +9,10 @@ export function filterAsyncRouter(asyncRouteMap) {
       if (route.component === "Layout") {
         route.component = Layout;
       } else {
-        route.component = () => import(route.component);
+        route.component = loadView(route.component);
       }
     }
-    if (route.children && route.children.length) {
+    if (route.children && route.children.length > 0) {
       route.children = filterAsyncRouter(route.children);
     }
     return true;
@@ -23,5 +23,5 @@ export function filterAsyncRouter(asyncRouteMap) {
  * 异步加载组件
  */
 export function loadView(component) {
-  return () => import(`${component}`+".vue");
+  return () => import(`@/views/${component}`);
 }
