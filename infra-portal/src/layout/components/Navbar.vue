@@ -24,7 +24,9 @@
             ></el-avatar>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
+            <router-link to="/profile/index">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+            </router-link>
             <a target="_blank" href="https://gitee.com/dalao708/infra">
               <el-dropdown-item>码云</el-dropdown-item>
             </a>
@@ -56,8 +58,7 @@ export default {
   },
   data() {
     return {
-      url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+      url: this.$store.getters.avatar
     };
   },
   methods: {

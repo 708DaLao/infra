@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 25/09/2020 17:14:49
+ Date: 28/09/2020 14:56:40
 */
 
 SET NAMES utf8mb4;
@@ -150,15 +150,15 @@ CREATE TABLE `sys_router`  (
   `always_show` tinyint(1) NULL DEFAULT 0 COMMENT '是否显示根菜单（true,false）',
   `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_router
 -- ----------------------------
 INSERT INTO `sys_router` VALUES (1, '', '', '/login2', '', 0, 'Layout', '', 0, 0, 0, 10);
-INSERT INTO `sys_router` VALUES (2, '登录页', 'el-icon-help', 'index', NULL, 0, 'views/login/index', NULL, 1, 0, 0, 11);
+INSERT INTO `sys_router` VALUES (2, '登录页', 'el-icon-help', 'index', NULL, 0, 'login/index', NULL, 1, 0, 0, 11);
 INSERT INTO `sys_router` VALUES (3, NULL, NULL, '/404', NULL, 0, 'Layout', NULL, 0, 0, 0, 20);
-INSERT INTO `sys_router` VALUES (4, '404', 'el-icon-warning-outline', 'index', NULL, 0, 'views/error/404/index', NULL, 3, 0, 0, 21);
+INSERT INTO `sys_router` VALUES (4, '404', 'el-icon-warning-outline', 'index', NULL, 0, 'error/404/index', NULL, 3, 0, 0, 21);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -182,8 +182,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1599526134, '管理员', 'aaa', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (1599705554, '测试用户', '是是是', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1599526134, '管理员', 'aaa', 'https://w.wallhaven.cc/full/39/wallhaven-39dmkd.jpg', NULL, NULL, 0, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1599705554, '测试用户', '是是是', 'https://w.wallhaven.cc/full/dg/wallhaven-dgrgql.jpg', NULL, NULL, 0, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_auth
