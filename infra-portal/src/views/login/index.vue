@@ -89,12 +89,15 @@ export default {
             username: this.loginForm.username.trim(),
             password: this.loginForm.password.trim()
           };
-          this.$store.dispatch("user/login", data)
+          this.$store
+            .dispatch("user/login", data)
             .then(() => {
-              this.$router.push({
-                path: this.redirect || "/",
-                query: this.otherQuery
-              });
+              this.$router
+                .push({
+                  path: this.redirect || "/",
+                  query: this.otherQuery
+                })
+                .catch(() => {});
               this.loading = false;
             })
             .catch(() => {

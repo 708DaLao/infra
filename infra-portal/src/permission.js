@@ -34,7 +34,7 @@ router.beforeEach(async (to, from, next) => {
           );
           // 添加路由
           router.addRoutes(asyncRoutes);
-          next();
+          next({ ...to, replace: true});
         } catch (e) {
           await store.dispatch("user/resetToken");
           Message.error(e || "获取信息异常");
