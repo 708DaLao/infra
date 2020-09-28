@@ -6,6 +6,7 @@ const getters = {
     grantType: state => state.setting.grantType, // oauth认证模式
     clientId: state => state.setting.clientId, // 客户端id
     clientSecret: state => state.setting.clientSecret, // 客户端密钥
+    permission_routes: state => state.role.routes, // 用户完整的权限路由
 
 }
 export default getters

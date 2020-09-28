@@ -10,7 +10,7 @@
         :collapse="$store.getters.isCollapse"
       >
         <sidebar-item
-          v-for="route in routes"
+          v-for="route in permission_routes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import { mapGetters } from "vuex"
 import SidebarItem from "./SidebarItem";
 import styles from "@/styles/index.scss";
 export default {
@@ -32,9 +33,7 @@ export default {
     };
   },
   computed: {
-    routes() {
-      return this.$router.options.routes;
-    }
+    ...mapGetters(['permission_routes'])
   }
 };
 </script>

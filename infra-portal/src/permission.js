@@ -33,7 +33,6 @@ router.beforeEach(async (to, from, next) => {
             roles
           );
           // 添加路由
-          router.options.routes = asyncRoutes
           router.addRoutes(asyncRoutes);
           next();
         } catch (e) {
