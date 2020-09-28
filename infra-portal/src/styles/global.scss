@@ -1,0 +1,138 @@
+/**
+ * 全局样式库
+ * 2020/9/28
+ * @Author zzd
+ */
+
+/*-------字体大小---------*/
+@for $i from 12 through 50 {
+  .ft-#{$i} {
+    font-size: 1px * $i;
+  }
+}
+
+/*-------字体粗细---------*/
+@for $i from 1 through 9 {
+  .fw-#{$i} {
+    font-weight: $i * 100;
+  }
+}
+
+/*-------文字颜色---------*/
+.text-red {
+  color: #e54d42
+}
+.text-orange {
+  color: #f37b1d
+}
+.text-yellow {
+  color: #fbbd08
+}
+.text-olive {
+  color: #8dc63f
+}
+.text-green {
+  color: #39b54a
+}
+.text-purple {
+  color: #6739b6
+}
+.text-cyan {
+  color: #1cbbb4
+}
+.text-blue {
+  color: #0081ff
+}
+.text-mauve {
+  color: #9c26b0
+}
+.text-pink {
+  color: #e03997
+}
+.text-brown {
+  color: #a5673f
+}
+.text-grey {
+  color: #8799a3
+}
+.text-gray {
+  color: #aaaaaa
+}
+.text-black {
+  color: #333333
+}
+.text-white {
+  color: #ffffff
+}
+
+/*-------快捷字体相关预定义样式---------*/
+.i-line-through {
+  text-decoration: line-through;
+}
+.i-italic {
+  font-style: italic;
+}
+.i-indent {
+  text-indent: 2em;
+}
+.i-text-Abc {
+  text-transform: Capitalize;
+}
+.i-text-ABC {
+  text-transform: Uppercase;
+}
+.i-text-abc {
+  text-transform: Lowercase;
+}
+.i-text-price::before {
+  content: '¥';
+  font-size: 80%;
+  margin-right: 4px;
+}
+.i-text-price.en::before {
+  content: '$';
+}
+.i-text-bold {
+  font-weight: bold;
+}
+.i-text-center {
+  text-align: center;
+}
+.i-text-left {
+  text-align: left;
+}
+.i-text-right {
+  text-align: right;
+}
+
+/*-------边距---------*/
+$box-prop: ('padding' , 'margin', 'border');
+$box-direaction: ('top', 'right', 'bottom', 'left');
+@for $i from 0 through 200 {
+  @each $j in $box-direaction {
+    @each $p in $box-prop {
+      // padding-left-2
+      .#{$p}-#{$j}-#{$i} {
+        #{$p}-#{$j} : #{$i}px;
+      }
+      // padding-2: 2px;
+      .#{$p}-#{$i} {
+        #{$p} : #{$i}px;
+      }
+    }
+  }
+}
+
+
+/*-------行高---------*/
+// 基础行高
+.i-lh-base {
+  line-height: 1;
+}
+// 动态行高
+@for $i from 1 through 100 {
+  // line-height
+  .i-lh-#{$i} {
+    line-height: 1px * $i;
+  }
+}

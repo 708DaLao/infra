@@ -60,6 +60,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: "/style",
+    component: Layout,
+    redirect: "/style/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/style/index"),
+        name: "Style",
+        meta: { title: "样式库", icon: "el-icon-star-off" }
+      }
+    ]
+  },
+  {
     path: "/nested",
     component: Layout,
     redirect: "/nested/menu1",
