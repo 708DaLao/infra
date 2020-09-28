@@ -63,6 +63,7 @@ secure:
     urls: #配置白名单路径
       - "/actuator/**"
       - "/auth/oauth/token"
+      - "/auth/logout"
       - "/**/v2/api-docs"  # swagger
       - "/swagger-ui.html"
       - "/webjars/**"

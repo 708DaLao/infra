@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div class="header-left">
-      <div class="sidebar" @click="handelChange">
+      <div class="sidebar" @click="handleChange">
         <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
       </div>
     </div>
@@ -31,7 +31,9 @@
             <a target="_blank" href="https://github.com/708DaLao">
               <el-dropdown-item>GitHub</el-dropdown-item>
             </a>
-            <el-dropdown-item divided>退出登录</el-dropdown-item>
+            <el-dropdown-item divided @click.native="logout"
+              >退出登录</el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -59,8 +61,18 @@ export default {
     };
   },
   methods: {
-    handelChange() {
+    handleChange() {
       this.$store.commit("app/changeCollapse");
+    },
+    logout() {
+      this.$confirm("确定退出吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        await this.$store.dispatch("user/logout");
+        await this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      });
     }
   }
 };

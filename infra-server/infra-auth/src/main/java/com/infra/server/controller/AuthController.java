@@ -1,12 +1,14 @@
 package com.infra.server.controller;
 
 import com.infra.server.api.Result;
+import com.infra.server.api.ResultCodeEnum;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,8 @@ public class AuthController {
     private KeyPair keyPair;
     @Resource
     private TokenEndpoint tokenEndpoint;
+    @Resource
+    private ConsumerTokenServices consumerTokenServices;
 
     @ApiOperation("获取RSA公钥接口")
     @GetMapping("/rsa/public_key")
@@ -54,6 +58,17 @@ public class AuthController {
         }
         map.put("expires_in",accessToken.getExpiresIn());
         return Result.ok().data(map).message("获取token成功!");
+    }
+
+    @ApiOperation("退出登录")
+    @GetMapping("/logout")
+    public Result logout(@RequestParam String token){
+        boolean a = consumerTokenServices.revokeToken(token);
+        if (a) {
+            return Result.ok().message("退出成功");
+        } else {
+            return Result.setResult(ResultCodeEnum.TOKEN_ERROR);
+        }
     }
 
 }

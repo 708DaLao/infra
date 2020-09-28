@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers("/rsa/public_key").permitAll()
                 .antMatchers("/**/v2/api-docs").permitAll()
+                .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated();
     }
 

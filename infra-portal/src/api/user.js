@@ -23,9 +23,13 @@ export function getInfo() {
   });
 }
 
-export function logout() {
+/**
+ * 退出登录
+ */
+export function logout(token) {
   return request({
-    url: "/vue-element-admin/user/logout",
-    method: "post"
+    url: "/auth/logout",
+    method: "get",
+    params: { token }
   });
 }

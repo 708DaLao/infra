@@ -13,6 +13,7 @@
             type="text"
             v-model="loginForm.username"
             placeholder="请输入用户名"
+            @keyup.enter.native="handleLogin()"
           >
             <i slot="prepend" class="fa fa-user-o" aria-hidden="true"></i>
           </el-input>
@@ -23,6 +24,7 @@
             v-model="loginForm.password"
             show-password
             placeholder="请输入密码"
+            @keyup.enter.native="handleLogin()"
           >
             <i slot="prepend" class="fa fa-unlock-alt" aria-hidden="true"></i>
           </el-input>
