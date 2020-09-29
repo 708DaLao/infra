@@ -31,7 +31,7 @@
             <span class="text-mauve margin-right-20">木槿(mauve)</span>
             <span class="text-pink margin-right-20">桃粉(pink)</span>
             <span class="text-brown margin-right-20">棕褐(brown)</span>
-            <span class="text-grey margin-right-20">玄灰(grey)</span>
+            <span class="text-greys margin-right-20">玄灰(greys)</span>
             <span class="text-gray margin-right-20">草灰(gray)</span>
             <span class="text-black margin-right-20">墨黑(black)</span>
             <span class="text-white margin-right-20">雅白(white)</span>
@@ -69,12 +69,82 @@
             <span class="i-lh-40 margin-right-20">动态行高(px)（i-lh-40）</span>
         </div>
         <el-divider></el-divider>
+        <span class="i-lh-40">背景颜色( bg-* ): </span>
+        <div class="ft-13 flex-row-center">
+            <div class="bg-red padding-20 margin-10"></div>
+            <div class="bg-orange padding-20 margin-10"></div>
+            <div class="bg-yellow padding-20 margin-10"></div>
+            <div class="bg-olive padding-20 margin-10"></div>
+            <div class="bg-green padding-20 margin-10"></div>
+            <div class="bg-purple padding-20 margin-10"></div>
+            <div class="bg-cyan padding-20 margin-10"></div>
+            <div class="bg-blue padding-20 margin-10"></div>
+            <div class="bg-mauve padding-20 margin-10"></div>
+            <div class="bg-pink padding-20 margin-10"></div>
+            <div class="bg-brown padding-20 margin-10"></div>
+            <div class="bg-greys padding-20 margin-10"></div>
+            <div class="bg-gray padding-20 margin-10"></div>
+            <div class="bg-black padding-20 margin-10"></div>
+            <div class="bg-white padding-20 margin-10"></div>
+        </div>
+        <el-divider></el-divider>
+        <span class="i-lh-40">flex比例布局:</span>
+        <div class="flex">
+            <div class="flex-sub bg-olive padding-5 margin-10">1 flex-sub</div>
+            <div class="flex-sub bg-olive padding-5 margin-10">1 flex-sub</div>
+        </div>
+        <div class="flex">
+            <div class="flex-sub bg-olive padding-5 margin-10">1 flex-sub</div>
+            <div class="flex-twice bg-olive padding-5 margin-10">2 flex-twice</div>
+        </div>
+        <div class="flex">
+            <div class="flex-sub bg-olive padding-5 margin-10">1 flex-sub</div>
+            <div class="flex-twice bg-olive padding-5 margin-10">2 flex-twice</div>
+            <div class="flex-treble bg-olive padding-5 margin-10">3 flex-treble</div>
+        </div>
+        <el-divider></el-divider>
+        <span class="i-lh-40">flex水平对齐:</span>
+        <div class="justify-start">
+            <div class="bg-green padding-10 margin-10">justify-start</div>
+            <div class="bg-green padding-10 margin-10">justify-start</div>
+        </div>
+        <div class="justify-end">
+            <div class="bg-green padding-10 margin-10">justify-end</div>
+            <div class="bg-green padding-10 margin-10">justify-end</div>
+        </div>
+        <div class="justify-center">
+            <div class="bg-green padding-10 margin-10">justify-center</div>
+            <div class="bg-green padding-10 margin-10">justify-center</div>
+        </div>
+        <div class="justify-between">
+            <div class="bg-green padding-10 margin-10">justify-between</div>
+            <div class="bg-green padding-10 margin-10">justify-between</div>
+        </div>
+        <div class="justify-around">
+            <div class="bg-green padding-10 margin-10">justify-around</div>
+            <div class="bg-green padding-10 margin-10">justify-around</div>
+        </div>
+        <el-divider></el-divider>
+        <span class="i-lh-40">flex垂直对齐:</span>
+        <div class="flex-row">
+            <div class="align-start margin-right-50">
+                <div class="bg-cyan padding-20 margin-10">INFRA</div>
+                <div class="bg-cyan padding-10 margin-10">align-start</div>
+            </div>
+            <div class="align-end margin-right-50">
+                <div class="bg-cyan padding-20 margin-10">INFRA</div>
+                <div class="bg-cyan padding-10 margin-10">align-end</div>
+            </div>
+            <div class="align-center">
+                <div class="bg-cyan padding-20 margin-10">INFRA</div>
+                <div class="bg-cyan padding-10 margin-10">align-center</div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "index"
     }
 </script>
 

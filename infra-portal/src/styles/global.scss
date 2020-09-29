@@ -18,52 +18,23 @@
   }
 }
 
-/*-------文字颜色---------*/
-.text-red {
-  color: #e54d42
+/*-------文字颜色和背景颜色---------*/
+$colors: (red: #e54d42, orange: #f37b1d, yellow: #fbbd08, olive: #8dc63f, green: #39b54a,purple: #6739b6, cyan: #1cbbb4,
+        blue: #0081ff, mauve: #9c26b0, pink: #e03997, brown: #a5673f, greys: #8799a3, gray: #aaaaaa, black: #333333, white: #ffffff);
+@each $key, $value in $colors {
+  .text-#{$key} {
+    color: $value;
+  }
+  .bg-#{$key} {
+    background-color: $value;
+    color: #ffffff;
+  }
+  .bg-#{$key}.light {
+    color: $value;
+    background-color: #fadbd9;
+  }
 }
-.text-orange {
-  color: #f37b1d
-}
-.text-yellow {
-  color: #fbbd08
-}
-.text-olive {
-  color: #8dc63f
-}
-.text-green {
-  color: #39b54a
-}
-.text-purple {
-  color: #6739b6
-}
-.text-cyan {
-  color: #1cbbb4
-}
-.text-blue {
-  color: #0081ff
-}
-.text-mauve {
-  color: #9c26b0
-}
-.text-pink {
-  color: #e03997
-}
-.text-brown {
-  color: #a5673f
-}
-.text-grey {
-  color: #8799a3
-}
-.text-gray {
-  color: #aaaaaa
-}
-.text-black {
-  color: #333333
-}
-.text-white {
-  color: #ffffff
-}
+
 
 /*-------快捷字体相关预定义样式---------*/
 .i-line-through {
@@ -105,6 +76,7 @@
   text-align: right;
 }
 
+
 /*-------边距---------*/
 $box-prop: ('padding' , 'margin', 'border');
 $box-direaction: ('top', 'right', 'bottom', 'left');
@@ -135,4 +107,178 @@ $box-direaction: ('top', 'right', 'bottom', 'left');
   .i-lh-#{$i} {
     line-height: 1px * $i;
   }
+}
+
+
+/*-------定位---------*/
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.fixed {
+  position: fixed;
+}
+// absolute
+.absolute-top {
+  @extend .absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.absolute-center {
+  @extend .absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+.absolute-lt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.absolute-rt {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+.absolute-lb {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.absolute-rb {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+// fixed
+.fixed-full {
+  @extend .fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.fixed-top {
+  @extend .fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.fixed-center {
+  @extend .fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+/*-------flex布局---------*/
+.flex {
+  display: flex;
+}
+// 自动换行
+.flex-wrap {
+  @extend .flex;
+  flex-wrap: wrap;
+}
+// flex横向布局
+.flex-row {
+  @extend .flex;
+  flex-direction: row;
+}
+// flex纵向布局
+.flex-column {
+  @extend .flex;
+  flex-direction: column;
+}
+.flex-sub {
+  flex: 1;
+}
+.flex-twice {
+  flex: 2;
+}
+.flex-treble {
+  flex: 3;
+}
+// 副轴起点对齐
+.align-start {
+  @extend .flex;
+  align-items: flex-start;
+}
+// 副轴终点对齐
+.align-end {
+  @extend .flex;
+  align-items: flex-end;
+}
+// 副轴中间对齐（垂直对齐）
+.align-center {
+  @extend .flex;
+  align-items: center;
+}
+.align-stretch {
+  @extend .flex;
+  align-items: stretch;
+}
+.self-start {
+  @extend .flex;
+  align-self: flex-start;
+}
+.self-end {
+  @extend .flex;
+  align-self: flex-end;
+}
+.self-stretch {
+  @extend .flex;
+  align-self: stretch;
+}
+.align-stretch {
+  @extend .flex;
+  align-items: stretch;
+}
+// 主轴起点对齐
+.justify-start {
+  @extend .flex;
+  justify-content: flex-start;
+}
+// 主轴终点对齐
+.justify-end {
+  @extend .flex;
+  justify-content: flex-end;
+}
+// 主轴居中对齐（水平对齐）
+.justify-center {
+  @extend .flex;
+  justify-content: center;
+}
+.justify-between {
+  @extend .flex;
+  justify-content: space-between;
+}
+.justify-around {
+  @extend .flex;
+  justify-content: space-around;
+}
+// 横向布局水平居中对齐
+.flex-row-center {
+  @extend .flex-row;
+  @extend .justify-center;
+  @extend .align-center;
+}
+// 纵向布局水平居中对齐
+.flex-column-center {
+  @extend .flex-column;
+  @extend .justify-center;
+  @extend .align-center;
 }
