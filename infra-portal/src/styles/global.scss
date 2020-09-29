@@ -4,6 +4,12 @@
  * @Author zzd
  */
 
+$box-prop: ('padding' , 'margin', 'border');
+$box-direaction: ('top', 'right', 'bottom', 'left');
+$colors: (red: #e54d42, orange: #f37b1d, yellow: #fbbd08, olive: #8dc63f, green: #39b54a,purple: #6739b6, cyan: #1cbbb4,
+        blue: #0081ff, mauve: #9c26b0, pink: #e03997, brown: #a5673f, greys: #8799a3, gray: #aaaaaa, black: #333333, white: #ffffff);
+
+
 /*-------字体大小---------*/
 @for $i from 12 through 50 {
   .ft-#{$i} {
@@ -19,8 +25,6 @@
 }
 
 /*-------文字颜色和背景颜色---------*/
-$colors: (red: #e54d42, orange: #f37b1d, yellow: #fbbd08, olive: #8dc63f, green: #39b54a,purple: #6739b6, cyan: #1cbbb4,
-        blue: #0081ff, mauve: #9c26b0, pink: #e03997, brown: #a5673f, greys: #8799a3, gray: #aaaaaa, black: #333333, white: #ffffff);
 @each $key, $value in $colors {
   .text-#{$key} {
     color: $value;
@@ -32,6 +36,99 @@ $colors: (red: #e54d42, orange: #f37b1d, yellow: #fbbd08, olive: #8dc63f, green:
   .bg-#{$key}.light {
     color: $value;
     background-color: #fadbd9;
+  }
+}
+
+/*-------圆角边框---------*/
+@for $i from 1 through 50 {
+  .br-#{$i} {
+    border-radius: #{$i}px;
+  }
+}
+
+/*-------边框---------*/
+@for $i from 1 through 10 {
+  .border-#{$i} {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      width: 200%;
+      height: 200%;
+      border-radius: inherit;
+      pointer-events: none;
+      box-sizing: border-box;
+      top: 0;
+      left: 0;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      border: #{$i}px solid #909399;
+    }
+  }
+}
+@for $i from 1 through 10 {
+  @each $j in $box-direaction {
+    .border-#{$j}-#{$i} {
+      position: relative;
+      &::after {
+        position: absolute;
+        content: "";
+        width: 200%;
+        height: 200%;
+        border-radius: inherit;
+        pointer-events: none;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        border-#{$j}: #{$i}px solid #909399;
+      }
+    }
+  }
+}
+@for $i from 1 through 10 {
+  @each $key, $value in $colors {
+    .border-#{$key}-#{$i} {
+      position: relative;
+      &::after {
+        position: absolute;
+        content: "";
+        width: 200%;
+        height: 200%;
+        border-radius: inherit;
+        pointer-events: none;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        border: #{$i}px solid $value;
+      }
+    }
+  }
+}
+@for $i from 1 through 10 {
+  @each $j in $box-direaction {
+    @each $key, $value in $colors {
+      .border-#{$j}-#{$key}-#{$i} {
+        position: relative;
+        &::after {
+          position: absolute;
+          content: "";
+          width: 200%;
+          height: 200%;
+          border-radius: inherit;
+          pointer-events: none;
+          box-sizing: border-box;
+          top: 0;
+          left: 0;
+          transform: scale(0.5);
+          transform-origin: 0 0;
+          border-#{$j}: #{$i}px solid $value;
+        }
+      }
+    }
   }
 }
 
@@ -78,8 +175,6 @@ $colors: (red: #e54d42, orange: #f37b1d, yellow: #fbbd08, olive: #8dc63f, green:
 
 
 /*-------边距---------*/
-$box-prop: ('padding' , 'margin', 'border');
-$box-direaction: ('top', 'right', 'bottom', 'left');
 @for $i from 0 through 200 {
   @each $j in $box-direaction {
     @each $p in $box-prop {
@@ -282,3 +377,4 @@ $box-direaction: ('top', 'right', 'bottom', 'left');
   @extend .justify-center;
   @extend .align-center;
 }
+

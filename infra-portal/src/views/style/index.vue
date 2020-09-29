@@ -140,6 +140,18 @@
                 <div class="bg-cyan padding-10 margin-10">align-center</div>
             </div>
         </div>
+        <el-divider></el-divider>
+        <span class="i-lh-40">边框和圆角边框(border-*)(br-*):</span>
+        <div class="i-text-center">
+            <div class="border-1 padding-20 margin-10"></div>
+            <div class="border-red-1 br-10 padding-20 margin-10"></div>
+            <div class="border-cyan-1 br-30 padding-20 margin-10"></div>
+            <div class="border-green-1 br-50 padding-20 margin-10"></div>
+            <div class="border-top-2 padding-20 margin-10"></div>
+            <div class="border-right-green-5 padding-20 margin-10"></div>
+            <div class="border-bottom-pink-7 padding-20 margin-10"></div>
+            <div class="border-left-orange-10 padding-20 margin-10"></div>
+        </div>
     </div>
 </template>
 

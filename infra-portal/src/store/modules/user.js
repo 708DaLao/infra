@@ -5,9 +5,10 @@ import { Message } from "element-ui";
 
 const state = {
   token: getToken(),
-  nickname: "",
-  avatar: "",
-  roles: []
+  nickname: "", // 昵称
+  avatar: "", // 头像
+  roles: [], // 角色
+  userInfo: [] // 用户信息
 };
 
 const mutations = {
@@ -22,6 +23,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles;
+  },
+  SET_USERINFO: (state, userInfo) => {
+    state.userInfo = userInfo;
   }
 };
 
@@ -59,6 +63,7 @@ const actions = {
           commit("SET_ROLES", roles);
           commit("SET_NICKNAME", info.nickname);
           commit("SET_AVATAR", info.avatar);
+          commit("SET_USERINFO", info);
           resolve(data);
         })
         .catch(error => {
@@ -74,6 +79,7 @@ const actions = {
         .then(res => {
           commit("SET_TOKEN", "");
           commit("SET_ROLES", []);
+          commit("SET_USERINFO", []);
           removeToken();
           resetRouter();
           Message({
