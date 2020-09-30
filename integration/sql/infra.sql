@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 28/09/2020 14:56:40
+ Date: 30/09/2020 15:52:16
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,7 @@ CREATE TABLE `sys_log`  (
   `exception` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求异常',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
@@ -169,7 +169,7 @@ CREATE TABLE `sys_user`  (
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `realname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
-  `phone` int(11) NULL DEFAULT NULL COMMENT '电话',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电话',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `gender` int(1) NULL DEFAULT 0 COMMENT '性别（男1，女2，保密0）',
   `birthday` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '出生日期',
@@ -182,7 +182,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1599526134, '管理员', 'aaa', 'https://w.wallhaven.cc/full/39/wallhaven-39dmkd.jpg', NULL, NULL, 0, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1599526134, '超级管理员', 'aaa', 'https://w.wallhaven.cc/full/39/wallhaven-39dmkd.jpg', '13764599170', '1111@qq.com', 0, '2020-08-31', '', '2020-09-23 14:36:30', '2020-09-30 15:51:31');
 INSERT INTO `sys_user` VALUES (1599705554, '测试用户', '是是是', 'https://w.wallhaven.cc/full/dg/wallhaven-dgrgql.jpg', NULL, NULL, 0, NULL, NULL, NULL, NULL);
 
 -- ----------------------------

@@ -33,6 +33,7 @@ public class ResourceServiceImpl {
         resourceRolesMap.put("/api/system/current_user", "ADMIN,TEST".split(","));
         resourceRolesMap.put("/api/sys_user/info", "ADMIN,TEST".split(","));
         resourceRolesMap.put("/api/role/permission", "ADMIN,TEST".split(","));
+        resourceRolesMap.put("/api/sys_user/info/update", "ADMIN,TEST".split(","));
         redisUtil.hmset(RESOURCE_ROLES_MAP, resourceRolesMap);
     }
 }

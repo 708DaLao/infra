@@ -33,3 +33,15 @@ export function logout(token) {
     params: { token }
   });
 }
+
+/**
+ * 修改个人信息
+ */
+export function updateInfo(data) {
+  return request({
+    url: "/api/sys_user/info/update",
+    method: "post",
+    data
+  });
+}
+

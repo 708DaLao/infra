@@ -46,7 +46,6 @@ public class SysRoleController {
         // 构造路由树
         List<Object> asyncRoutes = filterRouter(sysRouterList);
 
-        System.out.println(JSONObject.toJSONString(asyncRoutes));
         // 返回权限
         map.put("asyncRoutes",asyncRoutes);
         return Result.ok().data(map).message("获取角色权限成功！");

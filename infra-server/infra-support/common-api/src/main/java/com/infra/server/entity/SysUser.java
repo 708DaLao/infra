@@ -43,7 +43,7 @@ public class SysUser implements Serializable {
      * 手机
     **/
     @ApiModelProperty(value = "手机")
-    private Integer phone;
+    private String phone;
     /**
      * 邮箱
     **/
@@ -56,8 +56,10 @@ public class SysUser implements Serializable {
     private Integer gender;
     /**
      * 出生日期
+     * 前端的日期选择器传入的值为null，导致更新失败，所以用FieldStrategy.IGNORED加以声明
     **/
     @ApiModelProperty(value = "出生日期")
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String birthday;
     /**
      * 住址
