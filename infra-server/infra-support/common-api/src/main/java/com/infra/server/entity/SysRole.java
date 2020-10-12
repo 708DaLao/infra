@@ -25,6 +25,7 @@ public class SysRole implements Serializable {
 
     /**
      * 角色名称
+     * 注意这个字段，数据库排序规则设置为了umb8mb4_bin，是为了设置英文大小写敏感
      */
     @ApiModelProperty(value = "角色名称")
     private String name;

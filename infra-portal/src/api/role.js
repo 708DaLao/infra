@@ -12,32 +12,35 @@ export function getPermissionByRoles(data) {
   });
 }
 
-export function getRoles() {
+/**
+ * 获取角色列表
+ */
+export function getRoles(query) {
   return request({
-    url: "/vue-element-admin/roles",
-    method: "get"
+    url: "/api/role/list",
+    method: "get",
+    params: query
   });
 }
 
-export function addRole(data) {
+/**
+ * 添加或修改角色信息
+ */
+export function saveRole(data) {
   return request({
-    url: "/vue-element-admin/role",
+    url: "/api/role/save",
     method: "post",
     data
   });
 }
 
-export function updateRole(id, data) {
+/**
+ * 根据id进行删除角色
+ */
+export function deleteRole(data) {
   return request({
-    url: `/vue-element-admin/role/${id}`,
-    method: "put",
-    data
-  });
-}
-
-export function deleteRole(id) {
-  return request({
-    url: `/vue-element-admin/role/${id}`,
-    method: "delete"
+    url: `/api/role/delete`,
+    method: "get",
+    params: data
   });
 }

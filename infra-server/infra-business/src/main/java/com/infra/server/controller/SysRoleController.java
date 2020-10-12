@@ -1,8 +1,12 @@
 package com.infra.server.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infra.server.api.Result;
 import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysRouter;
@@ -112,5 +116,65 @@ public class SysRoleController {
         }
         list.add(object);
     }
+
+    /**
+     * @param name 角色名称
+     * @param size 每页大小
+     * @param current 当前页
+     * @Return Sysrole
+     */
+    @ApiOperation("获取系统角色")
+    @GetMapping("/list")
+    public Result getRole(@RequestParam(required = false) String name,@RequestParam long current,@RequestParam long size) {
+        QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
+        if (!StrUtil.hasEmpty(name)) {
+            queryWrapper.like("name",name);
+        }
+        Page<SysRole> page = new Page<>(current,size);
+        IPage<SysRole> list = sysRoleService.page(page,queryWrapper);
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",list);
+        return Result.ok().data(map).message("获取角色列表成功");
+    }
+
+    @ApiOperation("添加或修改角色信息")
+    @PostMapping("/save")
+    public Result saveOrUpdateRole(@RequestBody SysRole sysRole) {
+        if (sysRole.getId() == null) {
+            QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("name",sysRole.getName());
+            SysRole sysRole1 = sysRoleService.getOne(queryWrapper);
+            if (ObjectUtil.isNotNull(sysRole1)) {
+                return Result.error().message("该角色已存在，请重新添加！");
+            } else {
+                boolean a = sysRoleService.save(sysRole);
+                if (a) {
+                    return Result.ok().message("添加角色成功");
+                } else {
+                    return Result.error().message("添加角色失败，请重试!");
+                }
+            }
+        } else {
+            boolean b = sysRoleService.updateById(sysRole);
+            if (b) {
+                return Result.ok().message("修改角色信息成功");
+            } else {
+                return Result.error().message("修改角色信息失败，请重试!");
+            }
+        }
+    }
+
+    @ApiOperation("根据id删除角色")
+    @GetMapping("/delete")
+    public Result deleteRole(@RequestParam Integer id) {
+        boolean a = sysRoleService.removeById(id);
+        if (a) {
+            return Result.ok().message("删除角色成功");
+        } else {
+            return Result.error().message("删除失败，请重试！");
+        }
+    }
+
+
 
 }

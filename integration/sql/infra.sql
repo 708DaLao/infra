@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 30/09/2020 15:52:16
+ Date: 12/10/2020 17:22:17
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,7 @@ CREATE TABLE `sys_log`  (
   `exception` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求异常',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
@@ -102,7 +102,7 @@ INSERT INTO `sys_log` VALUES (33, 0, 'GET', '测试111', '127.0.0.1', '/api/hell
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '角色名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
@@ -111,7 +111,8 @@ CREATE TABLE `sys_role`  (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, 'ADMIN', '管理员拥有所有权限');
-INSERT INTO `sys_role` VALUES (2, 'TEST', '测试');
+INSERT INTO `sys_role` VALUES (2, 'TEST', '测试角色');
+INSERT INTO `sys_role` VALUES (24, 'admin', '英文大小写敏感');
 
 -- ----------------------------
 -- Table structure for sys_role_router
@@ -182,7 +183,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1599526134, '超级管理员', 'aaa', 'https://w.wallhaven.cc/full/39/wallhaven-39dmkd.jpg', '13764599170', '1111@qq.com', 0, '2020-08-31', '', '2020-09-23 14:36:30', '2020-09-30 15:51:31');
+INSERT INTO `sys_user` VALUES (1599526134, '超级管理员', 'aaa', 'https://w.wallhaven.cc/full/39/wallhaven-39dmkd.jpg', '13764599170', '1111@qq.com', 0, '2020-08-31', 'ss', '2020-09-23 14:36:30', '2020-10-12 15:51:06');
 INSERT INTO `sys_user` VALUES (1599705554, '测试用户', '是是是', 'https://w.wallhaven.cc/full/dg/wallhaven-dgrgql.jpg', NULL, NULL, 0, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
