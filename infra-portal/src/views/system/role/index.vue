@@ -43,7 +43,12 @@
             @click="handleEdit(scope.row)"
             >编辑</el-button
           >
-          <el-button type="success" size="mini">权限分配</el-button>
+          <el-button
+            type="success"
+            size="mini"
+            @click="handlePermission(scope.row.id)"
+            >权限分配</el-button
+          >
           <el-button
             type="danger"
             icon="el-icon-delete"
@@ -98,11 +103,38 @@
         <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="权限配置" :visible.sync="dialogPermission" @close="closeDialogPermission" width="40%">
+      <el-tabs v-model="activeTab" stretch>
+        <el-tab-pane label="路由配置" name="first">
+          <el-tree
+            ref="routerTree"
+            :props="defaultProps"
+            :data="routerTreeData"
+            show-checkbox
+            default-expand-all
+            node-key="id"
+          >
+          </el-tree>
+        </el-tab-pane>
+        <el-tab-pane label="接口配置" name="second">接口配置</el-tab-pane>
+        <el-tab-pane label="用户配置" name="third">用户配置</el-tab-pane>
+        <el-tab-pane label="其他配置" name="fourth">扩展。。。</el-tab-pane>
+      </el-tabs>
+      <span slot="footer" class="flex-row-center">
+        <el-button size="small" @click="dialogPermission = false"
+          >取 消</el-button
+        >
+        <el-button size="small" type="primary" @click="submitPermission"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getRoles, saveRole, deleteRole } from "../../../api/role";
+import { getRoles, saveRole, deleteRole, getRouters, getPermissionByRoleId } from "../../../api/role";
 const defaultRole = {
   id: "",
   name: "",
@@ -126,7 +158,14 @@ export default {
       roleRules: {
         // 角色表单校验
         name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
-      }
+      },
+      dialogPermission: false, // 权限配置弹窗
+      activeTab: "first",
+      defaultProps: {
+        children: "children",
+        label: "label"
+      },
+      routerTreeData: [], // 路由树
     };
   },
   created() {
@@ -138,6 +177,10 @@ export default {
       getRoles(this.query).then(res => {
         this.roleList = res.data.list.records;
         this.total = res.data.list.total;
+      });
+      // 页面初始化时只去获取一次路由数据，减少数据库请求
+      getRouters().then(res => {
+        this.routerTreeData = res.data.tree;
       });
     },
     // 搜索
@@ -185,6 +228,18 @@ export default {
         })
         .catch(() => {});
     },
+    // 权限配置
+    handlePermission(roleId) {
+      this.dialogPermission = true;
+      // 获取角色权限
+      getPermissionByRoleId({roleId:roleId}).then(res => {
+        this.$refs.routerTree.setCheckedKeys(res.data.routerIds);
+      })
+    },
+    // 确定分配权限
+    submitPermission() {
+
+    },
     // 每页大小发生变化时执行
     handleSizeChange(val) {
       this.query.size = val;
@@ -203,6 +258,11 @@ export default {
       this.roleForm = Object.assign({}, defaultRole);
       this.$refs.roleForm.clearValidate();
       this.disabledRoleName = false;
+    },
+    // 关闭权限配置弹窗回调
+    closeDialogPermission() {
+      // 清空选中状态
+      this.$refs.routerTree.setCheckedKeys([]);
     }
   }
 };

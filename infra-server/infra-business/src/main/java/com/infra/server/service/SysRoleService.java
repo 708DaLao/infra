@@ -18,5 +18,10 @@ public interface SysRoleService extends IService<SysRole> {
      */
     List<SysRouter> getRouterByRoleIds(List<Integer> roleIds);
 
+    /**
+     * 根据角色id获取对应的权限路由id
+     */
+    List<Object> getRouterByRoleId(Integer roleId);
+
 
 }

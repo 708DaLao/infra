@@ -22,4 +22,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public List<SysRouter> getRouterByRoleIds(List<Integer> roleIds) {
         return this.baseMapper.getRouterByRoleIds(roleIds);
     }
+
+    @Override
+    public List<Object> getRouterByRoleId(Integer roleId) {
+        return this.baseMapper.getRouterByRoleId(roleId);
+    }
 }

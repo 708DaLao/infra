@@ -1,16 +1,18 @@
 package com.infra.server.controller;
 
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infra.server.api.Result;
 import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysRouter;
 import com.infra.server.service.SysRoleService;
+import com.infra.server.service.SysRouterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +33,12 @@ public class SysRoleController {
 
     @Resource
     private SysRoleService sysRoleService;
+    @Resource
+    private SysRouterService sysRouterService;
 
-    @ApiOperation("根据角色获取角色权限")
-    @GetMapping("/permission")
-    public Result getPermissionByRoles(@RequestParam String roles) {
+    @ApiOperation("根据角色获取角色的动态路由")
+    @GetMapping("/async_routes")
+    public Result getAsyncRoutesByRoles(@RequestParam String roles) {
         Map<String,Object> map = new HashMap<>();
 
         Object[] roleName = roles.split(",");
@@ -50,9 +54,9 @@ public class SysRoleController {
         // 构造路由树
         List<Object> asyncRoutes = filterRouter(sysRouterList);
 
-        // 返回权限
+        // 返回动态路由
         map.put("asyncRoutes",asyncRoutes);
-        return Result.ok().data(map).message("获取角色权限成功！");
+        return Result.ok().data(map).message("获取角色动态路由成功！");
     }
 
     /**
@@ -84,6 +88,7 @@ public class SysRoleController {
 
     /**
      * 路由结构
+     * 这里之所以不用hutool的树工具是为了把id和parentId两个属性移除掉，返回符合前端路由的数据结构
      */
     private void routerData(List<SysRouter> sysRouterList, List<Object> list, SysRouter r) {
         JSONObject object = new JSONObject();
@@ -174,6 +179,56 @@ public class SysRoleController {
             return Result.error().message("删除失败，请重试！");
         }
     }
+
+    @ApiOperation("根据角色id获取角色权限")
+    @GetMapping("/permission")
+    public Result getPermissionByRoleId(@RequestParam Integer roleId) {
+        Map<String,Object> map = new HashMap<>();
+        // 获取路由id
+        List<Object> routerIds = sysRoleService.getRouterByRoleId(roleId);
+        map.put("routerIds",routerIds);
+        return Result.ok().data(map).message("获取角色相关权限成功");
+    }
+
+    @ApiOperation("获取全部路由列表,且包含树结构。传分页参数则返回分页数据")
+    @GetMapping("/routers")
+    public Result getRouters(@RequestParam(required = false) Integer current,@RequestParam(required = false) Integer size) {
+        Map<String,Object> map = new HashMap<>();
+        if (current != null && size != null) {
+            // 分页查询
+            Page<SysRouter> page = new Page<>(current,size);
+            IPage<SysRouter> page1 = sysRouterService.page(page);
+            map.put("page",page1);
+        } else {
+            // 获取所有路由
+            List<SysRouter> list = sysRouterService.list();
+            map.put("list",list);
+
+            // 构造路由树
+            List<Tree<String>> tree = getRouterTree(list);
+            map.put("tree",tree);
+        }
+        return Result.ok().data(map).message("获取路由成功");
+    }
+
+    /**
+     * hutool树工具构建路由树
+     */
+    public List<Tree<String>> getRouterTree(List<SysRouter> sysRouterList) {
+        // 自定义属性名，详见Hutool树工具
+        // https://hutool.cn/docs/#/core/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/%E6%A0%91%E7%BB%93%E6%9E%84/%E6%A0%91%E7%BB%93%E6%9E%84%E5%B7%A5%E5%85%B7-TreeUtil
+//        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+//        treeNodeConfig.setParentIdKey("pid");
+        List<Tree<String>> routers = TreeUtil.build(sysRouterList, "0",
+                (router, tree) -> {
+                    tree.setId(router.getId().toString());
+                    tree.setParentId(router.getParentId().toString());
+                    // 扩展属性
+                    tree.putExtra("label",router.getTitle());
+                });
+        return routers;
+    }
+
 
 
 

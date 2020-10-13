@@ -1,4 +1,4 @@
-import { getPermissionByRoles } from "../../api/role";
+import { getAsyncRoutersByRoles } from "../../api/role";
 import { filterAsyncRouter } from "../../utils/permission";
 import { constantRoutes } from "../../router";
 
@@ -18,7 +18,7 @@ const actions = {
   // 获取路由
   getAsyncRoutes({ commit }, roles) {
     return new Promise((resolve, reject) => {
-      getPermissionByRoles(roles)
+      getAsyncRoutersByRoles(roles)
         .then(response => {
           const { data } = response;
           const asyncRoutes = filterAsyncRouter(data.asyncRoutes);

@@ -3,10 +3,10 @@ import request from "@/utils/request";
 /**
  * 根据角色获取权限
  */
-export function getPermissionByRoles(data) {
+export function getAsyncRoutersByRoles(data) {
   let data2 = {roles: data.join(",")}
   return request({
-    url: "/api/role/permission",
+    url: "/api/role/async_routes",
     method: "get",
     params: data2
   });
@@ -44,3 +44,26 @@ export function deleteRole(data) {
     params: data
   });
 }
+
+/**
+ * 获取全部路由列表,且包含树结构。传分页参数则返回分页数据
+ */
+export function getRouters(data) {
+  return request({
+    url: `/api/role/routers`,
+    method: "get",
+    params: data
+  });
+}
+
+/**
+ * 根据角色id获取权限
+ */
+export function getPermissionByRoleId(data) {
+  return request({
+    url: `/api/role/permission`,
+    method: "get",
+    params: data
+  });
+}
+

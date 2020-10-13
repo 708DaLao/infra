@@ -28,4 +28,10 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
             "</script>")
     List<SysRouter> getRouterByRoleIds(@Param("roleIds") List<Integer> roleIds);
 
+    /**
+     * 根据角色id获取对应的权限路由id
+     */
+    @Select("select srr.router_id from sys_role_router srr where srr.role_id = #{roleId}")
+    List<Object> getRouterByRoleId(@Param("roleId") Integer roleId);
+
 }
