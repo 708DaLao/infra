@@ -23,5 +23,11 @@ public interface SysRoleService extends IService<SysRole> {
      */
     List<Object> getRouterByRoleId(Integer roleId);
 
+    /**
+     * 分配路由权限
+     */
+    int saveRoleRouter(Integer roleId,Object routerPermission);
+
+
 
 }

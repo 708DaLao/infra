@@ -4,7 +4,7 @@ import request from "@/utils/request";
  * 根据角色获取权限
  */
 export function getAsyncRoutersByRoles(data) {
-  let data2 = {roles: data.join(",")}
+  let data2 = { roles: data.join(",") };
   return request({
     url: "/api/role/async_routes",
     method: "get",
@@ -67,3 +67,13 @@ export function getPermissionByRoleId(data) {
   });
 }
 
+/**
+ * 保存权限
+ */
+export function savePermission(data) {
+  return request({
+    url: `/api/role/permission/save`,
+    method: "post",
+    data
+  });
+}

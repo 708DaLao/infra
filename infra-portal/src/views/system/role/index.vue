@@ -104,7 +104,12 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="权限配置" :visible.sync="dialogPermission" @close="closeDialogPermission" width="40%">
+    <el-dialog
+      title="权限配置"
+      :visible.sync="dialogPermission"
+      @close="closeDialogPermission"
+      width="40%"
+    >
       <el-tabs v-model="activeTab" stretch>
         <el-tab-pane label="路由配置" name="first">
           <el-tree
@@ -122,11 +127,11 @@
         <el-tab-pane label="其他配置" name="fourth">扩展。。。</el-tab-pane>
       </el-tabs>
       <span slot="footer" class="flex-row-center">
-        <el-button size="small" @click="dialogPermission = false"
-          >取 消</el-button
-        >
         <el-button size="small" type="primary" @click="submitPermission"
           >确 定</el-button
+        >
+        <el-button size="small" @click="dialogPermission = false"
+          >取 消</el-button
         >
       </span>
     </el-dialog>
@@ -134,7 +139,14 @@
 </template>
 
 <script>
-import { getRoles, saveRole, deleteRole, getRouters, getPermissionByRoleId } from "../../../api/role";
+import {
+  getRoles,
+  saveRole,
+  deleteRole,
+  getRouters,
+  getPermissionByRoleId,
+  savePermission
+} from "../../../api/role";
 const defaultRole = {
   id: "",
   name: "",
@@ -166,6 +178,7 @@ export default {
         label: "label"
       },
       routerTreeData: [], // 路由树
+      roleId: "" // 当前选择的角色id
     };
   },
   created() {
@@ -230,15 +243,28 @@ export default {
     },
     // 权限配置
     handlePermission(roleId) {
+      this.roleId = roleId;
       this.dialogPermission = true;
       // 获取角色权限
-      getPermissionByRoleId({roleId:roleId}).then(res => {
+      getPermissionByRoleId({ roleId: roleId }).then(res => {
         this.$refs.routerTree.setCheckedKeys(res.data.routerIds);
-      })
+      });
     },
     // 确定分配权限
     submitPermission() {
+      let routerPermission = [];
+      let router = this.$refs.routerTree.getCheckedKeys();
+      for (let i = 0; i < router.length; i++) {
+        routerPermission.push({ roleId: this.roleId, routerId: router[i] });
+      }
 
+      savePermission({
+        roleId: this.roleId,
+        routerPermission: routerPermission
+      }).then(res => {
+        this.$message.success(res.message);
+        this.closeDialogPermission();
+      });
     },
     // 每页大小发生变化时执行
     handleSizeChange(val) {
@@ -261,6 +287,7 @@ export default {
     },
     // 关闭权限配置弹窗回调
     closeDialogPermission() {
+      this.dialogPermission = false;
       // 清空选中状态
       this.$refs.routerTree.setCheckedKeys([]);
     }
