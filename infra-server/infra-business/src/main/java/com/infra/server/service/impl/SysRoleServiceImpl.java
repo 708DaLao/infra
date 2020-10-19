@@ -9,6 +9,7 @@ import com.infra.server.service.SysRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -19,6 +20,9 @@ import java.util.List;
  **/
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Override
     public List<SysRouter> getRouterByRoleIds(List<Integer> roleIds) {
@@ -42,6 +46,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         } else {
             return this.baseMapper.delRoleRouterByRoleId(roleId);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteRoleByRoleId(Integer roleId) {
+        sysRoleService.removeById(roleId);
+        return this.baseMapper.delRoleRouterByRoleId(roleId);
     }
 
 }

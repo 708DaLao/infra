@@ -5,6 +5,9 @@ import com.infra.server.entity.SysRouter;
 import com.infra.server.mapper.SysRouterMapper;
 import com.infra.server.service.SysRouterService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * @Author: gisocn
@@ -13,4 +16,14 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class SysRouterServiceImpl extends ServiceImpl<SysRouterMapper, SysRouter> implements SysRouterService {
+
+    @Resource
+    private SysRouterService sysRouterService;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int delRouterByRouterId(Integer routerId) {
+        sysRouterService.removeById(routerId);
+        return this.baseMapper.delRoleRouterByRouterId(routerId);
+    }
 }

@@ -28,6 +28,11 @@ public interface SysRoleService extends IService<SysRole> {
      */
     int saveRoleRouter(Integer roleId,Object routerPermission);
 
+    /**
+     * 根据角色id删除路由，同时删除其权限
+     */
+    int deleteRoleByRoleId(Integer roleId);
+
 
 
 }

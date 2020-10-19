@@ -119,10 +119,11 @@
             show-checkbox
             default-expand-all
             node-key="id"
+            check-strictly
           >
           </el-tree>
         </el-tab-pane>
-        <el-tab-pane label="接口配置" name="second">接口配置</el-tab-pane>
+        <el-tab-pane label="资源配置" name="second">接口配置</el-tab-pane>
         <el-tab-pane label="用户配置" name="third">用户配置</el-tab-pane>
         <el-tab-pane label="其他配置" name="fourth">扩展。。。</el-tab-pane>
       </el-tabs>

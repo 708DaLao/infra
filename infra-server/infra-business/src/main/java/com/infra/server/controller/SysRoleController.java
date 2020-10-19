@@ -172,12 +172,9 @@ public class SysRoleController {
     @ApiOperation("根据id删除角色")
     @GetMapping("/delete")
     public Result deleteRole(@RequestParam Integer id) {
-        boolean a = sysRoleService.removeById(id);
-        if (a) {
-            return Result.ok().message("删除角色成功");
-        } else {
-            return Result.error().message("删除失败，请重试！");
-        }
+        sysRoleService.deleteRoleByRoleId(id);
+        return Result.ok().message("删除角色成功");
+
     }
 
     @ApiOperation("根据角色id获取角色权限")
@@ -224,7 +221,11 @@ public class SysRoleController {
                     tree.setId(router.getId().toString());
                     tree.setParentId(router.getParentId().toString());
                     // 扩展属性
-                    tree.putExtra("label",router.getTitle());
+                    if (!StrUtil.hasEmpty(router.getTitle())) {
+                        tree.putExtra("label",router.getTitle());
+                    } else {
+                        tree.putExtra("label","(无标题)");
+                    }
                 });
         return routers;
     }
@@ -242,6 +243,23 @@ public class SysRoleController {
         }
     }
 
+    @ApiOperation("保存或修改路由")
+    @PostMapping("/routers/save")
+    public Result saveOrUpdateRouter(@RequestBody SysRouter sysRouter) {
+        boolean a = sysRouterService.saveOrUpdate(sysRouter);
+        if (a) {
+            return Result.ok().message("添加或修改路由成功");
+        } else {
+            return Result.error().message("添加或修改路由失败，请重试！");
+        }
+    }
+
+    @ApiOperation("根据id删除路由")
+    @GetMapping("/routers/delete")
+    public Result deleteRouter(@RequestParam Integer id) {
+        sysRouterService.delRouterByRouterId(id);
+        return Result.ok().message("删除路由成功");
+    }
 
 
 

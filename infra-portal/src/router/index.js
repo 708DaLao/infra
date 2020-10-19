@@ -46,33 +46,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: "/system",
-    component: Layout,
-    redirect: "/system/role",
-    name: "System",
-    meta: { title: "系统管理", icon: "el-icon-menu" },
-    children: [
-      {
-        path: "role",
-        component: () => import("@/views/system/role/index"), // Parent router-view
-        name: "Role",
-        meta: { title: "角色管理", icon: "el-icon-menu" }
-      },
-      {
-        path: "router",
-        component: () => import("@/views/system/router/index"), // Parent router-view
-        name: "Router",
-        meta: { title: "路由管理", icon: "el-icon-menu" }
-      },
-      {
-        path: "user",
-        component: () => import("@/views/system/user/index"), // Parent router-view
-        name: "User",
-        meta: { title: "用户管理", icon: "el-icon-menu" }
-      }
-    ]
-  },
-  {
     path: "/profile",
     component: Layout,
     redirect: "/profile/index",
@@ -82,7 +55,7 @@ export const constantRoutes = [
         path: "index",
         component: () => import("@/views/profile/index"),
         name: "Profile",
-        meta: { title: "个人中心", icon: "el-icon-user"}
+        meta: { title: "个人中心", icon: "el-icon-user" }
       }
     ]
   },
