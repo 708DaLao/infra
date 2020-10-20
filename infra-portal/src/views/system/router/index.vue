@@ -275,7 +275,7 @@ export default {
         .then(() => {
           deleteRouter({ id: id }).then(res => {
             this.$message.success(res.message);
-            // this.initData();
+            this.initData();
           });
         })
         .catch(() => {});

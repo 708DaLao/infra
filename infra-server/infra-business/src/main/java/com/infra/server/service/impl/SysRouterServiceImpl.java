@@ -22,8 +22,8 @@ public class SysRouterServiceImpl extends ServiceImpl<SysRouterMapper, SysRouter
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int delRouterByRouterId(Integer routerId) {
-        sysRouterService.removeById(routerId);
-        return this.baseMapper.delRoleRouterByRouterId(routerId);
+    public boolean delRouterByRouterId(Integer routerId) {
+        this.baseMapper.delRoleRouterByRouterId(routerId);
+        return sysRouterService.removeById(routerId);
     }
 }

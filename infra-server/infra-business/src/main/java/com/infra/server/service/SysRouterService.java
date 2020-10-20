@@ -13,5 +13,5 @@ public interface SysRouterService extends IService<SysRouter> {
     /**
      * 根据路由id删除路由，同时删除相关角色路由
      */
-    int delRouterByRouterId(Integer routerId);
+    boolean delRouterByRouterId(Integer routerId);
 }

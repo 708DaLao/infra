@@ -50,9 +50,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteRoleByRoleId(Integer roleId) {
-        sysRoleService.removeById(roleId);
-        return this.baseMapper.delRoleRouterByRoleId(roleId);
+    public boolean deleteRoleByRoleId(Integer roleId) {
+        this.baseMapper.delRoleRouterByRoleId(roleId);
+        return sysRoleService.removeById(roleId);
     }
 
 }

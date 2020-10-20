@@ -172,8 +172,12 @@ public class SysRoleController {
     @ApiOperation("根据id删除角色")
     @GetMapping("/delete")
     public Result deleteRole(@RequestParam Integer id) {
-        sysRoleService.deleteRoleByRoleId(id);
-        return Result.ok().message("删除角色成功");
+        boolean a = sysRoleService.deleteRoleByRoleId(id);
+        if (a) {
+            return Result.ok().message("删除角色成功");
+        } else {
+            return Result.error().message("删除角色失败，请重试！");
+        }
 
     }
 
@@ -257,8 +261,12 @@ public class SysRoleController {
     @ApiOperation("根据id删除路由")
     @GetMapping("/routers/delete")
     public Result deleteRouter(@RequestParam Integer id) {
-        sysRouterService.delRouterByRouterId(id);
-        return Result.ok().message("删除路由成功");
+        boolean a = sysRouterService.delRouterByRouterId(id);
+        if (a) {
+            return Result.ok().message("删除路由成功");
+        } else {
+            return Result.error().message("删除路由失败，请重试！");
+        }
     }
 
 
