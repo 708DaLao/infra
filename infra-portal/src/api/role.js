@@ -50,7 +50,7 @@ export function deleteRole(data) {
  */
 export function getRouters(data) {
   return request({
-    url: `/api/role/routers`,
+    url: `/api/role/routers/list`,
     method: "get",
     params: data
   });

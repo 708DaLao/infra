@@ -32,13 +32,6 @@ public class RedisConfig {
         template.setConnectionFactory(factory);
         // Json序列化配置
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        // json转对象类，不设置默认的会将json转成hashmap,common-api包里面是设置了，这里不需要设置
-//        ObjectMapper om = new ObjectMapper();
-//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-////        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL); 已过期，使用下面这个
-//        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,
-//                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-//        jackson2JsonRedisSerializer.setObjectMapper(om);
 
         // String 的序列化
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();

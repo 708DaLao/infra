@@ -33,6 +33,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: "/404",
+    component: () => import("@/views/error/404/index"),
+    hidden: true
+  },
+  {
     path: "/",
     component: Layout,
     redirect: "/dashboard",

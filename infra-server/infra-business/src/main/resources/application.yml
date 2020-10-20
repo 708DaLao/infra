@@ -13,7 +13,7 @@ spring:
     username: root
     password: root
   redis:
-    database: 1     #0数据库已经给auth服务用来管理令牌之类的
+    database: 0
     host: localhost
     password: 123456
 
@@ -31,3 +31,8 @@ management:
     web:
       exposure:
         include: '*'
+
+
+# 存在redis中的资源key
+redis:
+  resourceKey: AUTH:RESOURCE_ROLES_MAP

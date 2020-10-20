@@ -13,8 +13,10 @@ import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysRouter;
 import com.infra.server.service.SysRoleService;
 import com.infra.server.service.SysRouterService;
+import com.infra.server.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +37,10 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
     @Resource
     private SysRouterService sysRouterService;
+    @Value("${redis.resourceKey}")
+    String resourceKey;
+    @Resource
+    private RedisUtil redisUtil;
 
     @ApiOperation("根据角色获取角色的动态路由")
     @GetMapping("/async_routes")
@@ -130,15 +136,20 @@ public class SysRoleController {
      */
     @ApiOperation("获取系统角色")
     @GetMapping("/list")
-    public Result getRole(@RequestParam(required = false) String name,@RequestParam long current,@RequestParam long size) {
+    public Result getRole(@RequestParam(required = false) String name,@RequestParam(required = false) Integer current,@RequestParam(required = false) Integer size) {
+        Map<String,Object> map = new HashMap<>();
         QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
         if (!StrUtil.hasEmpty(name)) {
             queryWrapper.like("name",name);
         }
-        Page<SysRole> page = new Page<>(current,size);
-        IPage<SysRole> list = sysRoleService.page(page,queryWrapper);
-        Map<String,Object> map = new HashMap<>();
-        map.put("list",list);
+        if (current != null && size != null) {
+            Page<SysRole> page = new Page<>(current,size);
+            IPage<SysRole> list = sysRoleService.page(page,queryWrapper);
+            map.put("list",list);
+        } else {
+            List<SysRole> list = sysRoleService.list(queryWrapper);
+            map.put("list",list);
+        }
         return Result.ok().data(map).message("获取角色列表成功");
     }
 
@@ -192,7 +203,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("获取全部路由列表,且包含树结构。传分页参数则返回分页数据")
-    @GetMapping("/routers")
+    @GetMapping("/routers/list")
     public Result getRouters(@RequestParam(required = false) Integer current,@RequestParam(required = false) Integer size) {
         Map<String,Object> map = new HashMap<>();
         if (current != null && size != null) {
@@ -267,6 +278,20 @@ public class SysRoleController {
         } else {
             return Result.error().message("删除路由失败，请重试！");
         }
+    }
+
+    @ApiOperation("获取资源,即接口-角色权限")
+    @GetMapping("/resource/list")
+    public Result getResource() {
+        Map<Object,Object> map = redisUtil.hmget(resourceKey);
+        List<Object> list = new ArrayList<>();
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            JSONObject obj = new JSONObject();
+            obj.put("key",entry.getKey());
+            obj.put("value",entry.getValue().toString());
+            list.add(obj);
+        }
+        return Result.ok().data("resource",list);
     }
 
 

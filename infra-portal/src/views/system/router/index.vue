@@ -147,6 +147,7 @@
         </el-form-item>
         <el-form-item label="排序">
           <el-input
+            type="number"
             v-model="routerForm.sort"
             placeholder="建议每个大分类相隔至少10"
           ></el-input>

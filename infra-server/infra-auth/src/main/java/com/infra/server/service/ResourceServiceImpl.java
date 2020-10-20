@@ -28,8 +28,6 @@ public class ResourceServiceImpl {
     @PostConstruct
     public void initData() {
         Map<String, Object> resourceRolesMap = new HashMap<>();
-        resourceRolesMap.put("/api/hello","ADMIN".split(","));
-        resourceRolesMap.put("/api/user", "ADMIN,TEST".split(","));
         resourceRolesMap.put("/api/system/current_user", "ADMIN,TEST".split(","));
         resourceRolesMap.put("/api/sys_user/info", "ADMIN,TEST".split(","));
         resourceRolesMap.put("/api/role/async_routes", "ADMIN,TEST".split(","));
@@ -37,11 +35,12 @@ public class ResourceServiceImpl {
         resourceRolesMap.put("/api/role/list", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/save", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/delete", "ADMIN".split(","));
-        resourceRolesMap.put("/api/role/routers", "ADMIN".split(","));
+        resourceRolesMap.put("/api/role/routers/list", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/permission", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/permission/save", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/routers/save", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/routers/delete", "ADMIN".split(","));
+        resourceRolesMap.put("/api/role/resource/list", "ADMIN".split(","));
         redisUtil.hmset(RESOURCE_ROLES_MAP, resourceRolesMap);
     }
 }
