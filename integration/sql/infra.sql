@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 12/10/2020 17:22:17
+ Date: 21/10/2020 17:50:40
 */
 
 SET NAMES utf8mb4;
@@ -57,44 +57,42 @@ CREATE TABLE `sys_log`  (
   `exception` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求异常',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES (1, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-07-04 20:33:38');
-INSERT INTO `sys_log` VALUES (2, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-07-04 20:34:49');
-INSERT INTO `sys_log` VALUES (3, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-07-04 20:36:28');
-INSERT INTO `sys_log` VALUES (4, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-07-04 20:51:32');
-INSERT INTO `sys_log` VALUES (5, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2]}', NULL, '2020-07-04 20:52:13');
-INSERT INTO `sys_log` VALUES (6, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2?b=4]}', NULL, '2020-07-04 20:54:33');
-INSERT INTO `sys_log` VALUES (7, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2,b=4]}', NULL, '2020-07-04 20:54:45');
-INSERT INTO `sys_log` VALUES (8, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2,b=4]}', NULL, '2020-07-04 20:54:54');
-INSERT INTO `sys_log` VALUES (9, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2/b=4]}', NULL, '2020-07-04 20:56:12');
-INSERT INTO `sys_log` VALUES (10, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2/b=4]}', NULL, '2020-07-04 21:08:34');
-INSERT INTO `sys_log` VALUES (11, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[2]}', NULL, '2020-07-04 21:30:53');
-INSERT INTO `sys_log` VALUES (12, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 15:31:54');
-INSERT INTO `sys_log` VALUES (13, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[1]}', NULL, '2020-08-23 15:32:34');
-INSERT INTO `sys_log` VALUES (14, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[1],b:[2]}', NULL, '2020-08-23 15:32:51');
-INSERT INTO `sys_log` VALUES (15, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[1,2],b:[2]}', NULL, '2020-08-23 15:33:06');
-INSERT INTO `sys_log` VALUES (16, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{a:[1,2],b:[2],c:[aaaa]}', NULL, '2020-08-23 15:33:27');
-INSERT INTO `sys_log` VALUES (17, 0, 'GET', '测试111', '127.0.0.1', '/test/a', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 15:36:15');
-INSERT INTO `sys_log` VALUES (18, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 16:01:50');
-INSERT INTO `sys_log` VALUES (19, 0, 'GET', '测试111', '127.0.0.1', '/test/id=%22%22', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 16:18:14');
-INSERT INTO `sys_log` VALUES (20, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{id:[\\]}', NULL, '2020-08-23 16:19:25');
-INSERT INTO `sys_log` VALUES (21, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{id:[\\\\]}', NULL, '2020-08-23 16:19:28');
-INSERT INTO `sys_log` VALUES (22, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{id:[\\\\]}', NULL, '2020-08-23 16:20:17');
-INSERT INTO `sys_log` VALUES (23, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 17:25:14');
-INSERT INTO `sys_log` VALUES (24, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 17:51:34');
-INSERT INTO `sys_log` VALUES (25, 0, 'GET', '测试111', '127.0.0.1', '/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-08-23 17:53:36');
-INSERT INTO `sys_log` VALUES (26, 0, 'GET', '测试111', '127.0.0.1', '/api/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-09 09:01:32');
-INSERT INTO `sys_log` VALUES (27, 0, 'GET', '测试111', '127.0.0.1', '/api/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-09 09:23:00');
-INSERT INTO `sys_log` VALUES (28, 0, 'GET', '测试111', '127.0.0.1', '/api/test', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-09 10:01:08');
-INSERT INTO `sys_log` VALUES (29, 0, 'GET', '测试111', '127.0.0.1', '/api/hello', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-10 10:24:25');
-INSERT INTO `sys_log` VALUES (30, 0, 'GET', '测试111', '127.0.0.1', '/api/hello', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-10 10:36:33');
-INSERT INTO `sys_log` VALUES (31, 0, 'GET', '测试111', '127.0.0.1', '/api/hello', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-10 16:14:19');
-INSERT INTO `sys_log` VALUES (32, 0, 'GET', '测试111', '127.0.0.1', '/api/hello', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-10 16:14:38');
-INSERT INTO `sys_log` VALUES (33, 0, 'GET', '测试111', '127.0.0.1', '/api/hello', 'com.infra.server.controller.testController.test', '{}', NULL, '2020-09-10 16:41:58');
+
+-- ----------------------------
+-- Table structure for sys_resource
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源名称',
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '拥有者',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_resource
+-- ----------------------------
+INSERT INTO `sys_resource` VALUES (34, '/api/system/current_user', 'ADMIN', '获取当前登录用户');
+INSERT INTO `sys_resource` VALUES (35, '/api/sys_user/info', 'ADMIN,TEST', '获取当前登录用户信息');
+INSERT INTO `sys_resource` VALUES (36, '/api/role/async_routes', 'ADMIN,TEST', '根据角色获取角色的动态路由');
+INSERT INTO `sys_resource` VALUES (37, '/api/sys_user/info/update', 'ADMIN,TEST', '修改用户个人信息');
+INSERT INTO `sys_resource` VALUES (38, '/api/role/list', 'ADMIN', '获取角色列表');
+INSERT INTO `sys_resource` VALUES (39, '/api/role/save', 'ADMIN', '添加或修改角色信息');
+INSERT INTO `sys_resource` VALUES (40, '/api/role/delete', 'ADMIN', '根据id删除角色');
+INSERT INTO `sys_resource` VALUES (41, '/api/role/routers/list', 'ADMIN', '获取路由列表');
+INSERT INTO `sys_resource` VALUES (42, '/api/role/permission', 'ADMIN', '根据角色id获取角色权限');
+INSERT INTO `sys_resource` VALUES (43, '/api/role/permission/save', 'ADMIN', '分配权限');
+INSERT INTO `sys_resource` VALUES (44, '/api/role/routers/save', 'ADMIN', '添加或修改路由');
+INSERT INTO `sys_resource` VALUES (45, '/api/role/routers/delete', 'ADMIN', '根据id删除路由');
+INSERT INTO `sys_resource` VALUES (46, '/api/role/resource/list', 'ADMIN', '获取资源');
+INSERT INTO `sys_resource` VALUES (47, '/api/role/resource/save', ',ADMIN', '添加或修改资源');
+INSERT INTO `sys_resource` VALUES (48, '/api/role/resource/delete', 'ADMIN', '根据id删除资源');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -105,14 +103,13 @@ CREATE TABLE `sys_role`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '角色名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, 'ADMIN', '管理员拥有所有权限');
 INSERT INTO `sys_role` VALUES (2, 'TEST', '测试角色');
-INSERT INTO `sys_role` VALUES (24, 'admin', '英文大小写敏感');
 
 -- ----------------------------
 -- Table structure for sys_role_router
@@ -123,15 +120,17 @@ CREATE TABLE `sys_role_router`  (
   `role_id` int(10) NULL DEFAULT NULL COMMENT '角色id',
   `router_id` int(10) NULL DEFAULT NULL COMMENT '角色路由权限,即菜单',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色路由关系表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 156 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色路由关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_router
 -- ----------------------------
-INSERT INTO `sys_role_router` VALUES (1, 1, 1);
-INSERT INTO `sys_role_router` VALUES (2, 1, 2);
-INSERT INTO `sys_role_router` VALUES (3, 2, 3);
-INSERT INTO `sys_role_router` VALUES (4, 2, 4);
+INSERT INTO `sys_role_router` VALUES (150, 1, 6);
+INSERT INTO `sys_role_router` VALUES (151, 1, 7);
+INSERT INTO `sys_role_router` VALUES (152, 1, 8);
+INSERT INTO `sys_role_router` VALUES (153, 1, 9);
+INSERT INTO `sys_role_router` VALUES (154, 1, 23);
+INSERT INTO `sys_role_router` VALUES (155, 1, 24);
 
 -- ----------------------------
 -- Table structure for sys_router
@@ -151,15 +150,17 @@ CREATE TABLE `sys_router`  (
   `always_show` tinyint(1) NULL DEFAULT 0 COMMENT '是否显示根菜单（true,false）',
   `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表(其字段根据vue路由编写)，即菜单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_router
 -- ----------------------------
-INSERT INTO `sys_router` VALUES (1, '', '', '/login2', '', 0, 'Layout', '', 0, 0, 0, 10);
-INSERT INTO `sys_router` VALUES (2, '登录页', 'el-icon-help', 'index', NULL, 0, 'login/index', NULL, 1, 0, 0, 11);
-INSERT INTO `sys_router` VALUES (3, NULL, NULL, '/404', NULL, 0, 'Layout', NULL, 0, 0, 0, 20);
-INSERT INTO `sys_router` VALUES (4, '404', 'el-icon-warning-outline', 'index', NULL, 0, 'error/404/index', NULL, 3, 0, 0, 21);
+INSERT INTO `sys_router` VALUES (6, '权限管理', 'el-icon-user', '/system', 'System', 0, 'Layout', '/system/role', 0, 0, 0, 10);
+INSERT INTO `sys_router` VALUES (7, '角色管理', 'el-icon-help', 'role', 'Role', 1, 'system/role/index', '', 6, 0, 0, 11);
+INSERT INTO `sys_router` VALUES (8, '路由管理', 'el-icon-phone-outline', 'router', 'Router', 1, 'system/router/index', '', 6, 0, 0, 12);
+INSERT INTO `sys_router` VALUES (9, '用户管理', 'el-icon-eleme', 'user', 'User', 1, 'system/user/index', '', 6, 0, 0, 13);
+INSERT INTO `sys_router` VALUES (23, '资源管理', 'el-icon-warning-outline', 'resource', 'Resource', 0, 'system/resource/index', '', 6, 0, 0, 14);
+INSERT INTO `sys_router` VALUES (24, NULL, NULL, '*', NULL, 0, NULL, '/404', 0, 1, 0, 9999);
 
 -- ----------------------------
 -- Table structure for sys_user

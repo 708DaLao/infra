@@ -311,28 +311,42 @@ public class SysRoleController {
     public Result saveResource(@RequestBody SysResource sysResource) {
         // 添加
         if (StrUtil.hasEmpty(Convert.toStr(sysResource.getId()))) {
-            boolean a = sysResourceService.save(sysResource);
-            if (a) {
-                return Result.ok().message("添加资源成功");
+            QueryWrapper<SysResource> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("name",sysResource.getName());
+            SysResource sysResource1 = sysResourceService.getOne(queryWrapper);
+            if (ObjectUtil.isNotNull(sysResource1)) {
+                return Result.error().message("该资源已存在！请重命名！");
             } else {
-                return Result.error().message("添加资源失败，请重试！");
+                boolean a = sysResourceService.save(sysResource);
+                if (a) {
+                    // 保存到redis
+                    redisUtil.hset(resourceKey, sysResource.getName(),sysResource.getOwner().split(","));
+                    return Result.ok().message("添加资源成功");
+                } else {
+                    return Result.error().message("添加资源失败，请重试！");
+                }
             }
         } else {
             // 修改
             boolean a = sysResourceService.updateById(sysResource);
             if (a) {
+                // 保存到redis,已存在则会覆盖
+                redisUtil.hset(resourceKey, sysResource.getName(),sysResource.getOwner().split(","));
                 return Result.ok().message("修改资源成功");
             } else {
                 return Result.error().message("修改资源失败，请重试！");
             }
         }
+
     }
 
     @ApiOperation("根据id删除资源")
     @GetMapping("/resource/delete")
-    public Result deleteResource(@RequestParam List<Integer> id) {
+    public Result deleteResource(@RequestParam List<Integer> id,@RequestParam String name) {
         boolean a = sysResourceService.removeByIds(id);
         if (a) {
+            // 删除redis上的资源
+            redisUtil.hdel(resourceKey,name.split(","));
             return Result.ok().message("删除资源成功");
         } else {
             return Result.error().message("删除资源失败，请重试！");

@@ -23,6 +23,7 @@
         <java.version>1.8</java.version>
         <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
         <alibaba.version>2.1.0.RELEASE</alibaba.version>
+        <openfeign.version>2.2.5.RELEASE</openfeign.version>
         <mysql.version>8.0.18</mysql.version>
         <druid.version>1.1.16</druid.version>
         <mybatis.plus.version>3.3.2</mybatis.plus.version>
@@ -57,6 +58,13 @@
                 <version>${alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!--openfeign-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${openfeign.version}</version>
             </dependency>
 
             <dependency>

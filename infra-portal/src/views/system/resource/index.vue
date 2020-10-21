@@ -28,7 +28,7 @@
         type="danger"
         size="small"
         icon="el-icon-close"
-        @click="handleDelete(multipleSelection.toString())"
+        @click="handleMoreDelete()"
       >
         批量删除
       </el-button>
@@ -43,7 +43,8 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column label="ID" sortable prop="id"> </el-table-column>
+      <el-table-column label="ID" sortable prop="id" width="70px">
+      </el-table-column>
       <el-table-column label="资源" sortable prop="name"> </el-table-column>
       <el-table-column label="拥有者" prop="owner"> </el-table-column>
       <el-table-column label="资源描述" prop="description"> </el-table-column>
@@ -60,7 +61,7 @@
             type="danger"
             icon="el-icon-delete"
             size="mini"
-            @click="handleDelete(scope.row.id)"
+            @click="handleDelete(scope.row.id, scope.row.name)"
             >删除</el-button
           >
         </template>
@@ -89,10 +90,14 @@
         ref="resourceForm"
         :model="resourceForm"
         :rules="resourceFormRules"
-        label-width="70px"
+        label-width="80px"
       >
-        <el-form-item label="接口路径">
-          <el-input v-model="resourceForm.name" clearable></el-input>
+        <el-form-item label="接口路径" prop="name">
+          <el-input
+            v-model="resourceForm.name"
+            :disabled="isDisabled"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item label="资源描述">
           <el-input
@@ -146,9 +151,13 @@ export default {
       dialogTitle: "",
       dialogResource: false,
       resourceForm: Object.assign({}, defaultResource),
-      resourceFormRules: {}, // 检验规则
+      isDisabled: false, //是否禁止编辑接口
+      resourceFormRules: {
+        name: [{ required: true, message: "请输入资源路径", trigger: "blur" }]
+      }, // 检验规则
       roleList: [], // 角色列表
-      multipleSelection: [] // 多选
+      multipleSelectionId: [], // 多选时的id
+      multipleSelectionName: [] // 多选时的name
     };
   },
   created() {
@@ -180,6 +189,7 @@ export default {
       this.dialogTitle = "添加资源";
     },
     handleEdit(row) {
+      this.isDisabled = true;
       this.dialogTitle = "修改资源";
       this.dialogResource = true;
       // 深拷贝，避免影响表格数据
@@ -195,26 +205,38 @@ export default {
         this.closeDialog();
       });
     },
-    // 删除角色
-    handleDelete(id) {
+    // 删除资源
+    handleDelete(ids, names) {
       this.$confirm("确定删除该资源吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          console.log(id);
-          deleteResource({ id: id }).then(res => {
+          deleteResource({ id: ids, name: names }).then(res => {
             this.$message.success(res.message);
             this.initData();
           });
+          this.multipleSelectionId = [];
+          this.multipleSelectionName = [];
         })
         .catch(() => {});
     },
     // 批量删除
+    handleMoreDelete() {
+      if (!this.multipleSelectionId.length > 0) {
+        this.$message.warning("请勾选要删除的资源");
+      } else {
+        this.handleDelete(
+          this.multipleSelectionId.toString(),
+          this.multipleSelectionName.toString()
+        );
+      }
+    },
     handleSelectionChange(val) {
       for (let i = 0, len = val.length; i < len; i++) {
-        this.multipleSelection.push(val[i].id);
+        this.multipleSelectionId.push(val[i].id);
+        this.multipleSelectionName.push(val[i].name);
       }
     },
     // 每页大小发生变化时执行
@@ -230,8 +252,10 @@ export default {
       // console.log(`当前页: ${val}`);
     },
     closeDialog() {
+      this.isDisabled = false;
       this.dialogResource = false;
       this.resourceForm = Object.assign({}, defaultResource);
+      this.$refs.resourceForm.clearValidate();
     }
   }
 };
