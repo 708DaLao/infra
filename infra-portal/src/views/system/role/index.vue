@@ -210,7 +210,7 @@ export default {
     handleEdit(data) {
       this.dialogRoleTitle = "修改角色信息";
       this.dialogRole = true;
-      this.roleForm = Object.assign({}, data);
+      this.roleForm = JSON.parse(JSON.stringify(data));
       this.disabledRoleName = true;
     },
     // 确认

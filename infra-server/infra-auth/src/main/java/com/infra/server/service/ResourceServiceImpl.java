@@ -41,6 +41,8 @@ public class ResourceServiceImpl {
         resourceRolesMap.put("/api/role/routers/save", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/routers/delete", "ADMIN".split(","));
         resourceRolesMap.put("/api/role/resource/list", "ADMIN".split(","));
+        resourceRolesMap.put("/api/role/resource/save", "ADMIN".split(","));
+        resourceRolesMap.put("/api/role/resource/delete", "ADMIN".split(","));
         redisUtil.hmset(RESOURCE_ROLES_MAP, resourceRolesMap);
     }
 }

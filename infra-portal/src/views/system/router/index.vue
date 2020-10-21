@@ -247,7 +247,8 @@ export default {
     handleEdit(data) {
       this.dialogTitle = "修改路由";
       this.dialogRouter = true;
-      this.routerForm = data;
+      // 进行深拷贝，避免表格随编辑时变动
+      this.routerForm = JSON.parse(JSON.stringify(data));
     },
     // 确定
     handleSubmit() {

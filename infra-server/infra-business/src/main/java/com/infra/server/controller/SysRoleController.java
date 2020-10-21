@@ -1,5 +1,6 @@
 package com.infra.server.controller;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -9,8 +10,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infra.server.api.Result;
+import com.infra.server.entity.SysResource;
 import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysRouter;
+import com.infra.server.service.SysResourceService;
 import com.infra.server.service.SysRoleService;
 import com.infra.server.service.SysRouterService;
 import com.infra.server.utils.RedisUtil;
@@ -41,6 +44,8 @@ public class SysRoleController {
     String resourceKey;
     @Resource
     private RedisUtil redisUtil;
+    @Resource
+    private SysResourceService sysResourceService;
 
     @ApiOperation("根据角色获取角色的动态路由")
     @GetMapping("/async_routes")
@@ -282,18 +287,57 @@ public class SysRoleController {
 
     @ApiOperation("获取资源,即接口-角色权限")
     @GetMapping("/resource/list")
-    public Result getResource() {
-        Map<Object,Object> map = redisUtil.hmget(resourceKey);
-        List<Object> list = new ArrayList<>();
-        for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            JSONObject obj = new JSONObject();
-            obj.put("key",entry.getKey());
-            obj.put("value",entry.getValue().toString());
-            list.add(obj);
+    public Result getResource(@RequestParam(required = false) String content,@RequestParam(required = false) Integer current,@RequestParam(required = false) Integer size) {
+        Map<String,Object> map = new HashMap<>();
+        QueryWrapper<SysResource> queryWrapper = new QueryWrapper<>();
+        if (!StrUtil.hasEmpty(content)) {
+            queryWrapper.like("name",content).or().like("description",content).or().like("owner",content);
         }
-        return Result.ok().data("resource",list);
+        if (current != null && size != null) {
+            // 分页查询
+            Page<SysResource> page = new Page<>(current,size);
+            IPage<SysResource> page1 = sysResourceService.page(page,queryWrapper);
+            map.put("page",page1);
+        } else {
+            // 获取所有资源
+            List<SysResource> list = sysResourceService.list(queryWrapper);
+            map.put("list",list);
+        }
+        return Result.ok().data(map).message("获取资源成功");
     }
 
+    @ApiOperation("添加或修改资源")
+    @PostMapping("/resource/save")
+    public Result saveResource(@RequestBody SysResource sysResource) {
+        // 添加
+        if (StrUtil.hasEmpty(Convert.toStr(sysResource.getId()))) {
+            boolean a = sysResourceService.save(sysResource);
+            if (a) {
+                return Result.ok().message("添加资源成功");
+            } else {
+                return Result.error().message("添加资源失败，请重试！");
+            }
+        } else {
+            // 修改
+            boolean a = sysResourceService.updateById(sysResource);
+            if (a) {
+                return Result.ok().message("修改资源成功");
+            } else {
+                return Result.error().message("修改资源失败，请重试！");
+            }
+        }
+    }
+
+    @ApiOperation("根据id删除资源")
+    @GetMapping("/resource/delete")
+    public Result deleteResource(@RequestParam List<Integer> id) {
+        boolean a = sysResourceService.removeByIds(id);
+        if (a) {
+            return Result.ok().message("删除资源成功");
+        } else {
+            return Result.error().message("删除资源失败，请重试！");
+        }
+    }
 
 
 }
