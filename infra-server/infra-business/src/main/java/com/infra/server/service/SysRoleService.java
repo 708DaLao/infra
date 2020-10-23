@@ -5,6 +5,7 @@ import com.infra.server.entity.SysRole;
 import com.infra.server.entity.SysRouter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: gisocn
@@ -32,6 +33,11 @@ public interface SysRoleService extends IService<SysRole> {
      * 根据角色id删除路由，同时删除其权限
      */
     boolean deleteRoleByRoleId(Integer roleId);
+
+    /**
+     * 分配权限，开启事务
+     */
+    int savePermission(Map<String,Object> map);
 
 
 

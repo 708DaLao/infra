@@ -253,9 +253,7 @@ public class SysRoleController {
     @ApiOperation("分配权限")
     @PostMapping("/permission/save")
     public Result savePermission(@RequestBody Map<String,Object> map) {
-        Integer roleId = (Integer) map.get("roleId");
-        Object routerPermission = map.get("routerPermission");
-        int a = sysRoleService.saveRoleRouter(roleId,routerPermission);
+        int a = sysRoleService.savePermission(map);
         if (a > 0) {
             return Result.ok().message("权限分配成功");
         } else {

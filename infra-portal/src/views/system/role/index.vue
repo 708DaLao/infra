@@ -46,7 +46,7 @@
           <el-button
             type="success"
             size="mini"
-            @click="handlePermission(scope.row.id)"
+            @click="handlePermission(scope.row)"
             >权限分配</el-button
           >
           <el-button
@@ -123,7 +123,16 @@
           >
           </el-tree>
         </el-tab-pane>
-        <el-tab-pane label="资源配置" name="second">接口配置</el-tab-pane>
+        <el-tab-pane label="资源配置" name="second">
+          <el-checkbox-group v-model="checkedResource">
+            <el-checkbox
+              v-for="item in resourceData"
+              :label="item.id"
+              :key="item.id"
+              >{{ item.description }}</el-checkbox
+            >
+          </el-checkbox-group>
+        </el-tab-pane>
         <el-tab-pane label="用户配置" name="third">用户配置</el-tab-pane>
         <el-tab-pane label="其他配置" name="fourth">扩展。。。</el-tab-pane>
       </el-tabs>
@@ -148,6 +157,8 @@ import {
   getPermissionByRoleId,
   savePermission
 } from "../../../api/role";
+import { getResource } from "../../../api/resource";
+
 const defaultRole = {
   id: "",
   name: "",
@@ -179,7 +190,10 @@ export default {
         label: "label"
       },
       routerTreeData: [], // 路由树
-      roleId: "" // 当前选择的角色id
+      roleId: "", // 当前选择的角色id
+      roleName: "", // 角色名称
+      resourceData: [], // 资源数据
+      checkedResource: [] // 选择的资源
     };
   },
   created() {
@@ -195,6 +209,10 @@ export default {
       // 页面初始化时只去获取一次路由数据，减少数据库请求
       getRouters().then(res => {
         this.routerTreeData = res.data.tree;
+      });
+      getResource().then(res => {
+        let data = res.data.list;
+        this.resourceData = data;
       });
     },
     // 搜索
@@ -243,29 +261,89 @@ export default {
         .catch(() => {});
     },
     // 权限配置
-    handlePermission(roleId) {
-      this.roleId = roleId;
+    handlePermission(row) {
+      this.roleId = row.id;
+      this.roleName = row.name;
       this.dialogPermission = true;
       // 获取角色权限
-      getPermissionByRoleId({ roleId: roleId }).then(res => {
+      getPermissionByRoleId({ roleId: row.id }).then(res => {
         this.$refs.routerTree.setCheckedKeys(res.data.routerIds);
       });
+
+      // 获取资源权限
+      let checked = [];
+      for (let i = 0, len = this.resourceData.length; i < len; i++) {
+        if (this.resourceData[i].owner.indexOf(row.name) !== -1) {
+          checked.push(this.resourceData[i].id);
+        }
+      }
+      this.checkedResource = checked;
     },
     // 确定分配权限
     submitPermission() {
+      // 路由权限
       let routerPermission = [];
       let router = this.$refs.routerTree.getCheckedKeys();
       for (let i = 0; i < router.length; i++) {
         routerPermission.push({ roleId: this.roleId, routerId: router[i] });
       }
 
+      // 资源权限,前端配置owner字段的值，然后传给后端做批量修改
+      let resourcePermission = this.resourceData;
+      for (let i = 0, len = resourcePermission.length; i < len; i++) {
+        // 判断是否是要添加权限的那几条数据
+        if (this.checkedResource.indexOf(resourcePermission[i].id) !== -1) {
+          // 判断是否这几条数据已经有权限了
+          if (resourcePermission[i].owner.indexOf(this.roleName) === -1) {
+            // 判断这条数据owner字段是否是以逗号结尾
+            if (resourcePermission[i].owner.endsWith(",")) {
+              resourcePermission[i].owner =
+                resourcePermission[i].owner + this.roleName;
+            } else {
+              resourcePermission[i].owner =
+                resourcePermission[i].owner + "," + this.roleName;
+            }
+          }
+        } else {
+          // 判断这条数据是否包含当前角色
+          if (resourcePermission[i].owner.indexOf(this.roleName) !== -1) {
+            // 获取这条数据的当前角色的前一个字符是否为逗号，是的话就一起删除
+            let str = resourcePermission[i].owner.substr(
+              resourcePermission[i].owner.indexOf(this.roleName) - 1,
+              1
+            );
+            if (str === ",") {
+              resourcePermission[i].owner = resourcePermission[i].owner.replace(
+                "," + this.roleName,
+                ""
+              );
+            } else {
+              resourcePermission[i].owner = resourcePermission[i].owner.replace(
+                this.roleName,
+                ""
+              );
+            }
+          }
+        }
+      }
+
       savePermission({
         roleId: this.roleId,
-        routerPermission: routerPermission
+        routerPermission: routerPermission,
+        resourcePermission: resourcePermission
       }).then(res => {
         this.$message.success(res.message);
         this.closeDialogPermission();
       });
+    },
+    // 删除数组指定元素
+    removeByValue(arr, val) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === val) {
+          arr.splice(i, 1);
+          break;
+        }
+      }
     },
     // 每页大小发生变化时执行
     handleSizeChange(val) {
@@ -291,6 +369,7 @@ export default {
       this.dialogPermission = false;
       // 清空选中状态
       this.$refs.routerTree.setCheckedKeys([]);
+      this.checkedResource = [];
     }
   }
 };
