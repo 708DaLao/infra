@@ -336,15 +336,6 @@ export default {
         this.closeDialogPermission();
       });
     },
-    // 删除数组指定元素
-    removeByValue(arr, val) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === val) {
-          arr.splice(i, 1);
-          break;
-        }
-      }
-    },
     // 每页大小发生变化时执行
     handleSizeChange(val) {
       this.query.size = val;

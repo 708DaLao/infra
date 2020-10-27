@@ -1,6 +1,7 @@
 package com.infra.server.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class SysUserAuth implements Serializable {
      * 密码
     **/
     @ApiModelProperty(value = "密码")
+    @JsonIgnore
     private String password;
     /**
      * 状态（开启1，锁定0）
