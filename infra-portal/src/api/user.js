@@ -45,3 +45,25 @@ export function updateInfo(data) {
   });
 }
 
+/**
+ * 获取用户列表
+ * 参数： 分页参数
+ */
+export function getUserList(data) {
+  return request({
+    url: "/api/sys_user/list",
+    method: "get",
+    params: data
+  });
+}
+
+/**
+ * 添加或修改用户
+ */
+export function saveOrUpdateUser(data) {
+  return request({
+    url: "/api/sys_user/save",
+    method: "post",
+    data
+  });
+}
