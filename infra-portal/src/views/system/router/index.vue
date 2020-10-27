@@ -12,7 +12,7 @@
     </el-row>
 
     <el-table
-      ref="roleTable"
+      ref="routerTable"
       :data="routerList"
       border
       stripe
