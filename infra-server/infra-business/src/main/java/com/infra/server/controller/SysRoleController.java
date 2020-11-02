@@ -57,14 +57,15 @@ public class SysRoleController {
         QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("name",roleName);
         List<SysRole> roleList = sysRoleService.list(queryWrapper);
-
-        // 取出角色数组的id
-        List<Integer> roleIds = roleList.stream().map(SysRole::getId).collect(Collectors.toList());
-        // 根据角色id查询对应的路由列表
-        List<SysRouter> sysRouterList = sysRoleService.getRouterByRoleIds(roleIds);
-        // 构造路由树
-        List<Object> asyncRoutes = filterRouter(sysRouterList);
-
+        List<Object> asyncRoutes = new ArrayList<>();
+        if (ObjectUtil.isNotEmpty(roleList)) {
+            // 取出角色数组的id
+            List<Integer> roleIds = roleList.stream().map(SysRole::getId).collect(Collectors.toList());
+            // 根据角色id查询对应的路由列表
+            List<SysRouter> sysRouterList = sysRoleService.getRouterByRoleIds(roleIds);
+            // 构造路由树
+            asyncRoutes = filterRouter(sysRouterList);
+        }
         // 返回动态路由
         map.put("asyncRoutes",asyncRoutes);
         return Result.ok().data(map).message("获取角色动态路由成功！");
