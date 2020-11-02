@@ -3,13 +3,11 @@ import { filterAsyncRouter } from "../../utils/permission";
 import { constantRoutes } from "../../router";
 
 const state = {
-  routes: [], // 路由表
-  addRoutes: [] // 动态添加的路由
+  routes: [] // 路由表
 };
 
 const mutations = {
   SET_ROUTES: (state, asyncRoutes) => {
-    state.addRoutes = asyncRoutes;
     state.routes = constantRoutes.concat(asyncRoutes); // 合并路由
   }
 };
@@ -21,7 +19,17 @@ const actions = {
       getAsyncRoutersByRoles(roles)
         .then(response => {
           const { data } = response;
-          const asyncRoutes = filterAsyncRouter(data.asyncRoutes);
+          // 404 page must be placed at the end !!!
+          const notFound = [
+            {
+              path: "*",
+              redirect: "/404",
+              hidden: true
+            }
+          ];
+          const asyncRoutes = filterAsyncRouter(data.asyncRoutes).concat(
+            notFound
+          );
           commit("SET_ROUTES", asyncRoutes);
           resolve(asyncRoutes);
         })
