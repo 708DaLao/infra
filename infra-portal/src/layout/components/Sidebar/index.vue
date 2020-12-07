@@ -1,8 +1,18 @@
 <template>
   <div>
     <div class="logo">
-      <img v-if="!$store.getters.isCollapse" src="../../../assets/img/logo.png" alt="" style="height: 100%;width: 200px"/>
-      <img v-else src="../../../assets/img/logo-1.png" alt="" style="height: 100%;width: 65px"/>
+      <img
+        v-if="!$store.getters.isCollapse"
+        src="../../../assets/img/logo.png"
+        alt=""
+        style="height: 100%;width: 200px"
+      />
+      <img
+        v-else
+        src="../../../assets/img/logo-1.png"
+        alt=""
+        style="height: 100%;width: 65px"
+      />
     </div>
     <el-collapse-transition>
       <el-menu
@@ -21,7 +31,7 @@
 </template>
 
 <script>
-  import { mapGetters } from "vuex"
+import { mapGetters } from "vuex";
 import SidebarItem from "./SidebarItem";
 import styles from "@/styles/index.scss";
 export default {
@@ -33,7 +43,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['permission_routes'])
+    ...mapGetters(["permission_routes"])
   }
 };
 </script>

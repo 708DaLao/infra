@@ -2,12 +2,7 @@
   <div class="login">
     <div class="main">
       <h3 style="text-align: center;color: #ffffff">登录 INFRA</h3>
-      <el-form
-        :rules="rules"
-        ref="loginForm"
-        :model="loginForm"
-        label-width="80px"
-      >
+      <el-form :rules="rules" ref="loginForm" :model="loginForm">
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -128,23 +123,16 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url("../../assets/bg.jpg") no-repeat;
+  background: url("../../assets/bg.png") no-repeat;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .main {
     width: 300px;
-    margin-top: 220px;
-    margin-left: auto;
-    margin-right: 150px;
-    position: relative;
+    margin: 0 auto;
     .button-login {
       width: 100%;
-    }
-    .login-code {
-      height: 40px - 2px;
-      display: block;
-      margin: 0px -20px;
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
     }
   }
 }

@@ -1,25 +1,21 @@
 // this.$store.state.xxx
 const state = {
-    isCollapse: false // 是否折叠侧边栏
-}
+  isCollapse: false // 是否折叠侧边栏
+};
 
 // this.$store.commit()
 const mutations = {
-    changeCollapse: (state) => {
-        state.isCollapse = !state.isCollapse
-    }
-
-}
+  changeCollapse: state => {
+    state.isCollapse = !state.isCollapse;
+  }
+};
 
 // this.$store.dispatch()
-const actions = {
-
-}
+const actions = {};
 
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
-}
-
+  namespaced: true,
+  state,
+  mutations,
+  actions
+};

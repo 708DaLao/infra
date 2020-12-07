@@ -1,17 +1,34 @@
 <template>
   <div v-if="!item.hidden">
     <!--仅有一个子节点且非隐藏-->
-    <template v-if="hasOneShowingChild(item.children, item) &&(!onlyOneChild.children || onlyOneChild.noShowingChildren) &&!item.alwaysShow">
-      <router-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)" tag="div">
+    <template
+      v-if="
+        hasOneShowingChild(item.children, item) &&
+          (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+          !item.alwaysShow
+      "
+    >
+      <router-link
+        v-if="onlyOneChild.meta"
+        :to="resolvePath(onlyOneChild.path)"
+        tag="div"
+      >
         <el-menu-item :index="resolvePath(onlyOneChild.path)">
-          <i :class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"></i>
+          <i
+            :class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
+          ></i>
           <span slot="title">{{ onlyOneChild.meta.title }}</span>
         </el-menu-item>
       </router-link>
     </template>
 
     <!--递归遍历节点-->
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-submenu
+      v-else
+      ref="subMenu"
+      :index="resolvePath(item.path)"
+      popper-append-to-body
+    >
       <template slot="title" v-if="item.meta">
         <i :class="item.meta && item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>

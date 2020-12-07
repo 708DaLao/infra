@@ -12,7 +12,7 @@ const isProduction = process.env.NODE_ENV === "production";
 // cdn预加载使用
 const externals = {
   vue: "Vue",
-  "vue-router": "VueRouter",
+  "vue-router": "Router",
   vuex: "Vuex",
   axios: "axios",
   "element-ui": "ELEMENT"
@@ -38,7 +38,7 @@ const cdn = {
 };
 
 module.exports = {
-  lintOnSave: false, // 关闭eslint
+  lintOnSave: true, // eslint
   productionSourceMap: false,
   publicPath: "./",
   outputDir: process.env.outputDir, // 生成文件的目录名称，默认dist
@@ -54,8 +54,6 @@ module.exports = {
     config.resolve.alias // 文件指向
       .set("@", resolve("src"))
       .set("api", resolve("src/api"))
-      .set("assets", resolve("src/assets"))
-      .set("components", resolve("src/components"))
       .set("views", resolve("src/views"));
 
     // 压缩图片
@@ -163,21 +161,21 @@ module.exports = {
 
   devServer: {
     // 本地代理
-    open: false, // 自动启动浏览器
+    open: true, // 自动启动浏览器
     host: "0.0.0.0", // localhost
     port: 9527, // 端口号
     https: false,
-    hotOnly: false, // 热更新
-    proxy: {
-      "/api": {
-        target: process.env.VUE_APP_BASE_API, // 重写路径
-        ws: true, //开启WebSocket
-        secure: false, // 如果是https接口，需要配置这个参数
-        changeOrigin: true,
-        pathRewrite: {
-          "^/api": ""
-        }
-      }
-    }
+    hotOnly: false // 热更新
+    // proxy: {
+    //   "/api": {
+    //     target: process.env.VUE_APP_BASE_API, // 重写路径
+    //     ws: true, //开启WebSocket
+    //     secure: false, // 如果是https接口，需要配置这个参数
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       "^/api": ""
+    //     }
+    //   }
+    // }
   }
 };

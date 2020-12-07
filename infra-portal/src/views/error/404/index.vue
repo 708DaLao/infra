@@ -52,10 +52,15 @@
 export default {
   mounted() {
     // 单独给页面设置背景颜色
-    document.querySelector('body').setAttribute('style','background: linear-gradient(90deg, #2f3640 23%, #181b20 100%)')
+    document
+      .querySelector("body")
+      .setAttribute(
+        "style",
+        "background: linear-gradient(90deg, #2f3640 23%, #181b20 100%)"
+      );
   },
   beforeDestroy() {
-    document.querySelector('body').removeAttribute('style')
+    document.querySelector("body").removeAttribute("style");
   }
 };
 </script>

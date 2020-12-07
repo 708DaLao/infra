@@ -1,13 +1,11 @@
 <template>
-    <div>控制台</div>
+  <div>控制台</div>
 </template>
 
 <script>
-    export default {
-        name: "dashboard"
-    }
+export default {
+  name: "dashboard"
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

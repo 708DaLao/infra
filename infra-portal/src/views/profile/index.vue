@@ -12,7 +12,9 @@
               <span class="text-orange">{{ nickname }}</span>
             </div>
             <div class="margin-top-20 ft-13">
-              <el-button type="text" @click="dialogUserInfo = true">个人信息</el-button>
+              <el-button type="text" @click="dialogUserInfo = true"
+                >个人信息</el-button
+              >
             </div>
           </div>
         </el-card>
@@ -135,7 +137,7 @@ export default {
         if (valid) {
           updateInfo(this.userInfo).then(res => {
             this.$store.commit("user/SET_USERINFO", res.data.info);
-            this.closeDialog()
+            this.closeDialog();
             this.$message.success(res.message);
           });
         } else {
@@ -146,7 +148,7 @@ export default {
     // 关闭弹窗
     closeDialog() {
       this.dialogUserInfo = false;
-      this.userInfo = Object.assign({}, this.$store.getters.userInfo)
+      this.userInfo = Object.assign({}, this.$store.getters.userInfo);
     }
   }
 };
