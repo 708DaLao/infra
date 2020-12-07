@@ -14,8 +14,9 @@ spring:
         server-addr: 127.0.0.1:8848
     gateway:
       globalcors: # gateway配置跨域
-        corsConfigurations:
+        cors-configurations:
           '[/**]':
+            allowCredentials: true
             allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
